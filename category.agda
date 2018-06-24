@@ -1,29 +1,32 @@
 open import preface
 
-module category
-  (object : type-tt)
-  (arrow : object -> object -> type-tt)
-  (arrow-eq
-    : {a b : object} ->
-      arrow a b ->
-      arrow a b -> type-tt)
-  (identity : (a : object) -> arrow a a)
-  (compose
-    : {a b c : object} ->
-      arrow a b ->
-      arrow b c ->
-      arrow a c)
-  (identityLeft
-    : {a b : object} ->
-      (f : arrow a b) ->
-      (arrow-eq (compose (identity a) f) f))
-  (identityRight
-    : {a b : object} ->
-      (f : arrow a b) ->
-      (arrow-eq (compose f (identity b)) f))
-  (composeAssociative
-    : {a b c d : object} ->
-      (f : arrow a b) ->
-      (g : arrow b c) ->
-      (h : arrow c d) ->
-      (arrow-eq (compose f (compose g h)) (compose (compose f g) h))) where
+module category where
+
+record category : type-t1 where
+  field
+    object-t : type-tt
+    arrow-t : object-t -> object-t -> type-tt
+    arrow-eqv-t
+      : {a b : object-t} ->
+        arrow-t a b ->
+        arrow-t a b -> type-tt
+    identity : (a : object-t) -> arrow-t a a
+    compose
+      : {a b c : object-t} ->
+        arrow-t a b ->
+        arrow-t b c ->
+        arrow-t a c
+    identity-left
+      : {a b : object-t} ->
+        (f : arrow-t a b) ->
+        (arrow-eqv-t (compose (identity a) f) f)
+    identity-right
+      : {a b : object-t} ->
+        (f : arrow-t a b) ->
+        (arrow-eqv-t (compose f (identity b)) f)
+    compose-associative
+      : {a b c d : object-t} ->
+        (f : arrow-t a b) ->
+        (g : arrow-t b c) ->
+        (h : arrow-t c d) ->
+        (arrow-eqv-t (compose f (compose g h)) (compose (compose f g) h))
