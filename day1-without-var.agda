@@ -29,6 +29,6 @@ eval : {t : exp-type-t} -> exp-t t -> value-t t
 eval (lit-exp-c n) = n
 eval true-exp-c = false-c
 eval false-exp-c = false-c
-eval (less-exp-c a b) = eval a < eval b
-eval (plus-exp-c a b) = eval a + eval b
-eval (if-exp-c q a e) = if eval q then eval a else eval e
+eval (less-exp-c a b) = nat-lt-p (eval a) (eval b)
+eval (plus-exp-c a b) = nat-add (eval a) (eval b)
+eval (if-exp-c q a e) = if (eval q) (eval a) (eval e)
