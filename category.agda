@@ -2,15 +2,18 @@ open import preface
 
 module category where
 
-record category : type-t1 where
+record category-ct : type-t1 where
   field
-    object-t : type-tt
-    arrow-t : object-t -> object-t -> type-tt
+    object-t
+      : type-tt
+    arrow-t
+      : object-t -> object-t -> type-tt
     arrow-eqv-t
       : {a b : object-t} ->
         arrow-t a b ->
         arrow-t a b -> type-tt
-    identity : (a : object-t) -> arrow-t a a
+    identity
+      : (a : object-t) -> arrow-t a a
     compose
       : {a b c : object-t} ->
         arrow-t a b ->
