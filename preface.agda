@@ -79,6 +79,8 @@ nat-add-associate (succ-c x) y z =
 -- nat-commute zero-c y = {!!}
 -- nat-commute (succ-c x) y = {!!}
 
+-- list --
+
 -- vect --
 
 data vect-t (A : type-tt) : nat-t -> type-tt where
