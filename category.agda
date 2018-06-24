@@ -1,4 +1,4 @@
-open import preface
+open import little
 
 module category where
 
