@@ -1,4 +1,4 @@
-open import little
+open import pure
 open import category
 
 module nat-order where

@@ -1,6 +1,6 @@
-//// little-agda
+//// pure
 
-- ASCII
-- prefix notation
-- lisp naming convention
-- category-theory
+- little agda library with :
+  - pure ASCII
+  - pure prefix notation
+  - pure lisp naming convention

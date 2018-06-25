@@ -1,6 +1,6 @@
 module day1-without-var where
 
-open import little
+open import pure
 
 data exp-type-t : type-tt where
   nat-type-c  : exp-type-t

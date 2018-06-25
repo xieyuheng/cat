@@ -1,4 +1,4 @@
-module little where
+module pure where
 
 -- type --
 

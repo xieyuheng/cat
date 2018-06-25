@@ -1,4 +1,4 @@
-open import little
+open import pure
 
 module category where
 
