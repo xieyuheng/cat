@@ -14,12 +14,12 @@ data exp-t : exp-type-t -> type-tt where
   false-exp-c
     : exp-t bool-type-c
   less-exp-c
-    : (a, b : exp-t nat-type-c) -> exp-t bool-type-c
+    : (a b : exp-t nat-type-c) -> exp-t bool-type-c
   plus-exp-c
-    : (a, b : exp-t nat-type-c) -> exp-t nat-type-c
+    : (a b : exp-t nat-type-c) -> exp-t nat-type-c
   if-exp-c
     : {t : exp-type-t} ->
-      (q : exp-t bool-type-c) -> (a, e : exp-t t) -> exp-t t
+      (q : exp-t bool-type-c) -> (a e : exp-t t) -> exp-t t
 
 value-t : exp-type-t -> type-tt
 value-t nat-type-c = nat-t
