@@ -15,23 +15,22 @@ module RBT where
       Black : Color
 
     data Tree : Set where
-      Empty
-        : Tree
-      Node
-        : (l : Tree) ->
-          (c : Color) ->
-          (kv : (Key , Value)) ->
-          (r : Tree) -> Tree
+      Empty : Tree
+      Node :
+        (l : Tree) ->
+        (c : Color) ->
+        (kv : (Key , Value)) ->
+        (r : Tree) -> Tree
 
     blackenRoot : Tree -> Tree
     blackenRoot Empty = Empty
     blackenRoot (Node l c kv r) = Node l Black kv r
 
-    balance
-      : Tree ->
-        (c : Color) ->
-        (kv : (Key , Value)) ->
-        Tree -> Tree
+    balance :
+      Tree ->
+      (c : Color) ->
+      (kv : (Key , Value)) ->
+      Tree -> Tree
     balance (Node (Node a Red x b) Red y c) Black z d =
       Node (Node a Black x b) Red y (Node c Black z d)
     balance (Node a Red x (Node b Red y c)) Black z d =
@@ -69,20 +68,20 @@ module RBT where
     --     i.e. no red node has a red child
 
     data HasBH : Tree -> Nat -> Set where
-      EmptyHasBH
-        : HasBH Empty 1
-      RedNodeHasBH
-        : (hl : HasBH l n) ->
-          (hr : HasBH r n) ->
-          HasBH (Node l Red kv r) n
-      BlackNodeHasBH
-        : (hl : HasBH l n) ->
-          (hr : HasBH r n) ->
-          HasBH (Node l Black kv r) (S n)
+      EmptyHasBH :
+        HasBH Empty 1
+      RedNodeHasBH :
+        (hl : HasBH l n) ->
+        (hr : HasBH r n) ->
+        HasBH (Node l Red kv r) n
+      BlackNodeHasBH :
+        (hl : HasBH l n) ->
+        (hr : HasBH r n) ->
+        HasBH (Node l Black kv r) (S n)
 
-    -- blackenRootHasBH
-    --   : HasBH t n ->
-    --     (m : Nat ** HasBH (blackenRoot t) m)
+    -- blackenRootHasBH :
+    --   HasBH t n ->
+    --   (m : Nat ** HasBH (blackenRoot t) m)
     -- blackenRootHasBH {t = Empty} h = (1 ** EmptyHasBH)
     -- blackenRootHasBH {t = (Node l Red kv r)} {n} (RedNodeHasBH hl hr) =
     --   ((S n) ** (BlackNodeHasBH hl hr))

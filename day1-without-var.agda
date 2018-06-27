@@ -2,26 +2,26 @@ module day1-without-var where
 
 open import pure
 
-data exp-type-t : type-tt where
-  nat-type-c  : exp-type-t
+data exp-type-t : type-t where
+  nat-type-c : exp-type-t
   bool-type-c : exp-type-t
 
-data exp-t : exp-type-t -> type-tt where
-  lit-exp-c
-    : (n : nat-t) -> exp-t nat-type-c
-  true-exp-c
-    : exp-t bool-type-c
-  false-exp-c
-    : exp-t bool-type-c
-  less-exp-c
-    : (a b : exp-t nat-type-c) -> exp-t bool-type-c
-  plus-exp-c
-    : (a b : exp-t nat-type-c) -> exp-t nat-type-c
-  if-exp-c
-    : {t : exp-type-t} ->
-      (q : exp-t bool-type-c) -> (a e : exp-t t) -> exp-t t
+data exp-t : exp-type-t -> type-t where
+  lit-exp-c :
+    (n : nat-t) -> exp-t nat-type-c
+  true-exp-c :
+    exp-t bool-type-c
+  false-exp-c :
+    exp-t bool-type-c
+  less-exp-c :
+    (a b : exp-t nat-type-c) -> exp-t bool-type-c
+  plus-exp-c :
+    (a b : exp-t nat-type-c) -> exp-t nat-type-c
+  if-exp-c :
+    {t : exp-type-t} ->
+    (q : exp-t bool-type-c) -> (a e : exp-t t) -> exp-t t
 
-value-t : exp-type-t -> type-tt
+value-t : exp-type-t -> type-t
 value-t nat-type-c = nat-t
 value-t bool-type-c = bool-t
 

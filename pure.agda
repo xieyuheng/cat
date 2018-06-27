@@ -2,35 +2,33 @@ module pure where
 
 -- type --
 
-type-tt = Set
-
-type-t0 = Set
+type-t = Set
 type-t1 = Set1
 
 -- eqv --
 
-data eqv-t {A : type-tt} (q : A) : A -> type-tt where
+data eqv-t {A : type-t} (q : A) : A -> type-t where
   eqv-c : (eqv-t q q)
 
-eqv-apply : {A B : _} (f : A -> B)
-       {x y : _} -> (eqv-t x y) -> (eqv-t (f x) (f y))
+eqv-apply : {A B : _} {x y : _}
+  (f : A -> B) -> (eqv-t x y) -> (eqv-t (f x) (f y))
 eqv-apply f eqv-c = eqv-c
 
-eqv-compose
-  : {type : type-tt} ->
-    {x y z : type} ->
-    (eqv-t x y) -> (eqv-t y z) -> (eqv-t x z)
+eqv-compose :
+  {type : type-t} ->
+  {x y z : type} ->
+  (eqv-t x y) -> (eqv-t y z) -> (eqv-t x z)
 eqv-compose eqv-c eqv-c = eqv-c
 
-eqv-swap
-  : {type : type-tt} ->
-    {x y : type} ->
-    (eqv-t x y) -> (eqv-t y x)
+eqv-swap :
+  {type : type-t} ->
+  {x y : type} ->
+  (eqv-t x y) -> (eqv-t y x)
 eqv-swap eqv-c = eqv-c
 
 -- bool --
 
-data bool-t : type-tt where
+data bool-t : type-t where
   true-c : bool-t
   false-c : bool-t
 
@@ -52,7 +50,7 @@ if false-c x y = y
 
 -- nat --
 
-data nat-t : type-tt where
+data nat-t : type-t where
   zero-c : nat-t
   succ-c : nat-t -> nat-t
 
@@ -76,47 +74,47 @@ nat-eq-p zero-c (succ-c _) = false-c
 nat-eq-p (succ-c _) zero-c = false-c
 nat-eq-p (succ-c x) (succ-c y) = nat-eq-p x y
 
-nat-add-associate
-  : (x y z : nat-t) ->
-    (eqv-t
-      (nat-add x (nat-add y z))
-      (nat-add (nat-add x y) z))
+nat-add-associate :
+  (x y z : nat-t) ->
+  (eqv-t
+    (nat-add x (nat-add y z))
+    (nat-add (nat-add x y) z))
 nat-add-associate zero-c y z = eqv-c
 nat-add-associate (succ-c x) y z =
   eqv-apply succ-c (nat-add-associate x y z)
 
-nat-add-zero-commute
-  : (x : nat-t) ->
-    (eqv-t
-      (nat-add zero-c x)
-      (nat-add x zero-c))
+nat-add-zero-commute :
+  (x : nat-t) ->
+  (eqv-t
+    (nat-add zero-c x)
+    (nat-add x zero-c))
 nat-add-zero-commute zero-c = eqv-c
 nat-add-zero-commute (succ-c x) =
   eqv-apply succ-c (nat-add-zero-commute x)
 
-nat-add-succ-commute-1
-  : (x y : nat-t) ->
-    (eqv-t
-      (nat-add (succ-c x) y)
-      (succ-c (nat-add x y)))
+nat-add-succ-commute-1 :
+  (x y : nat-t) ->
+  (eqv-t
+    (nat-add (succ-c x) y)
+    (succ-c (nat-add x y)))
 nat-add-succ-commute-1 zero-c y = eqv-c
 nat-add-succ-commute-1 (succ-c x) y =
   eqv-apply succ-c (nat-add-succ-commute-1 x y)
 
-nat-add-succ-commute-2
-  : (x y : nat-t) ->
-    (eqv-t
-      (nat-add x (succ-c y))
-      (succ-c (nat-add x y)))
+nat-add-succ-commute-2 :
+  (x y : nat-t) ->
+  (eqv-t
+    (nat-add x (succ-c y))
+    (succ-c (nat-add x y)))
 nat-add-succ-commute-2 zero-c y = eqv-c
 nat-add-succ-commute-2 (succ-c x) y =
   eqv-apply succ-c (nat-add-succ-commute-2 x y)
 
-nat-add-commute
-  : (x y : nat-t) ->
-    (eqv-t
-      (nat-add x y)
-      (nat-add y x))
+nat-add-commute :
+  (x y : nat-t) ->
+  (eqv-t
+    (nat-add x y)
+    (nat-add y x))
 nat-add-commute zero-c y =
   nat-add-zero-commute y
 nat-add-commute (succ-c x) y =
@@ -128,8 +126,8 @@ nat-add-commute (succ-c x) y =
 
 -- vect --
 
-data vect-t (A : type-tt) : nat-t -> type-tt where
-  null-vect-c
-    : vect-t A zero-c
-  cons-vect-c
-    : {n : nat-t} -> A -> (vect-t A n) -> (vect-t A (succ-c n))
+data vect-t (A : type-t) : nat-t -> type-t where
+  null-vect-c :
+    vect-t A zero-c
+  cons-vect-c :
+    {n : nat-t} -> A -> (vect-t A n) -> (vect-t A (succ-c n))
