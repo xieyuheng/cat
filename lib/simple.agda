@@ -2,9 +2,13 @@ module simple where
 
 open import pure
 
+private
+  variable
+    l : Level
+
 -- bool --
 
-data bool-t : type where
+data bool-t : type0 where
   true : bool-t
   false : bool-t
 
@@ -26,7 +30,7 @@ if false x y = y
 
 -- nat --
 
-data nat-t : type where
+data nat-t : type0 where
   zero : nat-t
   succ : nat-t -> nat-t
 
@@ -102,7 +106,7 @@ nat-add-commute (succ x) y =
 
 -- vec --
 
-data vec-t (A : type) : nat-t -> type where
+data vec-t (A : type l) : nat-t -> type l where
   null-vec : vec-t A zero
   cons-vec : {n : nat-t} ->
     A -> (vec-t A n) -> (vec-t A (succ n))
