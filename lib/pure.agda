@@ -2,26 +2,26 @@ module pure where
 
 -- type --
 
-type-t = Set
-type-t1 = Set1
+type = Set
+type1 = Set1
 
 -- eqv --
 
-data eqv-t {A : type-t} (q : A) : A -> type-t where
-  eqv-c : (eqv-t q q)
+data eqv-t {A : type} (q : A) : A -> type where
+  eqv : (eqv-t q q)
 
 eqv-apply : {A B : _} {x y : _}
   (f : A -> B) -> (eqv-t x y) -> (eqv-t (f x) (f y))
-eqv-apply f eqv-c = eqv-c
+eqv-apply f eqv = eqv
 
 eqv-compose :
-  {type : type-t} ->
-  {x y z : type} ->
+  {A : type} ->
+  {x y z : A} ->
   (eqv-t x y) -> (eqv-t y z) -> (eqv-t x z)
-eqv-compose eqv-c eqv-c = eqv-c
+eqv-compose eqv eqv = eqv
 
 eqv-swap :
-  {type : type-t} ->
-  {x y : type} ->
+  {A : type} ->
+  {x y : A} ->
   (eqv-t x y) -> (eqv-t y x)
-eqv-swap eqv-c = eqv-c
+eqv-swap eqv = eqv

@@ -2,10 +2,10 @@ open import pure
 
 module category where
 
-record category-t : type-t1 where
+record category-t : type1 where
   field
-    object-t : type-t
-    morphism-t : object-t -> object-t -> type-t
+    object-t : type
+    morphism-t : object-t -> object-t -> type
     id : (a : object-t) -> morphism-t a a
     compose : {a b c : object-t} ->
       morphism-t a b -> morphism-t b c -> morphism-t a c
