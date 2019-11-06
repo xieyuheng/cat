@@ -1,6 +1,6 @@
-open import Agda.Primitive
-
 module pure where
+
+open import Agda.Primitive
 
 -- type --
 
@@ -12,7 +12,9 @@ type1 = Set1
 data eqv-t {A : type} (q : A) : A -> type where
   eqv : (eqv-t q q)
 
-eqv-apply : {A B : _} {x y : _}
+{-# BUILTIN EQUALITY eqv-t #-}
+
+eqv-apply : forall {A B} {x y}
   (f : A -> B) -> (eqv-t x y) -> (eqv-t (f x) (f y))
 eqv-apply f eqv = eqv
 

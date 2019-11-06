@@ -1,6 +1,6 @@
-open import pure
-
 module simple where
+
+open import pure
 
 -- bool --
 
