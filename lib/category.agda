@@ -48,6 +48,7 @@ record category-t : type1 where
         (g : (morphism-t x object)) ->
         (eqv-t {morphism-t x object} f g)
 
+
 --   terminal-iso : (t0 t1 : terminal-t) -> (iso-t (terminal-t.object t0) (terminal-t.object t1))
 --   terminal-iso t0 t1 =
 --     let
@@ -67,12 +68,13 @@ record category-t : type1 where
 --       }
 
   module _ (t0 t1 : terminal-t) where
-     open iso-t
-     open terminal-t
-     x = t0 .object
-     y = t1 .object
-     f = t1 .morphism x
-     g = t0 .morphism y
+    private
+      open iso-t
+      open terminal-t
+      x = t0 .object
+      y = t1 .object
+      f = t1 .morphism x
+      g = t0 .morphism y
 
     terminal-iso : iso-t x y
     terminal-iso .morphism = f
