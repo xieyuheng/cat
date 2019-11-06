@@ -63,6 +63,6 @@ record category-t : type1 where
     record
       { morphism = f
       ; inverse = g
-      ; left-inverse = terminal-t.morphism-unique (compose f g) (id x)
-      ; right-inverse = terminal-t.morphism-unique (compose g f) (id y)
+      ; left-inverse = terminal-t.morphism-unique t0 (compose f g) (id x)
+      ; right-inverse = terminal-t.morphism-unique t1 (compose g f) (id y)
       }
