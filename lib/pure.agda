@@ -1,3 +1,5 @@
+open import Agda.Primitive
+
 module pure where
 
 -- type --
