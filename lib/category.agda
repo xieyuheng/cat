@@ -52,17 +52,17 @@ record category-t : type1 where
   terminal-iso t0 t1 =
     let
       x : object-t
-      x = (terminal-t.object t0)
+      x = terminal-t.object t0
       y : object-t
-      y = (terminal-t.object t1)
-      f : (morphism-t x y)
-      f = (terminal-t.morphism t1 x)
-      g : (morphism-t y x)
-      g = (terminal-t.morphism t0 y)
+      y = terminal-t.object t1
+      f : morphism-t x y
+      f = terminal-t.morphism t1 x
+      g : morphism-t y x
+      g = terminal-t.morphism t0 y
     in
     record
       { morphism = f
       ; inverse = g
-      ; left-inverse = (terminal-t.morphism-unique t0 (compose f g) (id x))
-      ; right-inverse = (terminal-t.morphism-unique t1 (compose g f) (id y))
+      ; left-inverse = terminal-t.morphism-unique t0 (compose f g) (id x)
+      ; right-inverse = terminal-t.morphism-unique t1 (compose g f) (id y)
       }
