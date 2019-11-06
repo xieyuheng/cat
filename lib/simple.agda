@@ -1,5 +1,7 @@
 open import pure
 
+module simple where
+
 -- bool --
 
 data bool-t : type where
