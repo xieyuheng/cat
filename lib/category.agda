@@ -18,3 +18,10 @@ record category-t : type1 where
       (g : morphism-t b c) ->
       (h : morphism-t c d) ->
       (eqv-t (compose f (compose g h)) (compose (compose f g) h))
+
+  record iso-t (a b : object-t) : type where
+    field
+      morphism : morphism-t a b
+      inverse : morphism-t b a
+      left-inverse : (eqv-t (compose morphism inverse) (id a))
+      right-inverse : (eqv-t (compose inverse morphism) (id b))
