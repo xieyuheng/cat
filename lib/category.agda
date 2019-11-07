@@ -9,6 +9,7 @@ open import simple
 --   We will need equivalence relation to do this.
 -- - How should we handle `homset`?
 --   We will need `set-t` to do this.
+-- We delay these decisions until we running into troubles.
 
 record category-t {lv : level-t} : type (lsucc lv) where
   field
