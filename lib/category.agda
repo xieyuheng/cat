@@ -34,6 +34,9 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (compose f (compose g h))
         (compose (compose f g) h))
 
+  level : level-t
+  level = lv
+
   dom : {a b : object-t} -> (morphism-t a b) -> object-t
   dom {a} {b} f = a
 
@@ -63,9 +66,9 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (the-eqv-t (morphism-t x object) f g)
 
   module _ (t0 t1 : terminal-t) where
+    open iso-t
+    open terminal-t
     private
-      open iso-t
-      open terminal-t
       x = t0 .object
       y = t1 .object
       f = t1 .morphism x
@@ -81,3 +84,15 @@ record category-t {lv : level-t} : type (lsucc lv) where
   -- initial
   -- initial-iso
   -- initial-iso-unique
+
+-- TODO
+module _ {lv : level-t} (cat : category-t {lv}) where
+  open category-t
+  opposite : category-t
+  opposite .object-t = cat .object-t
+  opposite .morphism-t = cat .morphism-t
+  opposite .id = cat .id
+  opposite .compose = cat .compose
+  opposite .left-id = cat .left-id
+  opposite .right-id = cat .right-id
+  opposite .associative = cat .associative
