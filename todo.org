@@ -1,0 +1,2 @@
+- use module system of agda
+- example semantics for simply typed lambda calculus
