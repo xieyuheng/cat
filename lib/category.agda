@@ -3,7 +3,14 @@ module category where
 open import pure
 open import simple
 
-record category-t {lv : level-t} : type (lsuc lv) where
+-- NOTE
+-- - Should `morphism-t` be at one level higher than `object-t`?
+-- - Should we not use the general `the-eqv-t` but use `the-morphism-eqv-t`?
+--   We will need equivalence relation to do this.
+-- - How should we handle `homset`?
+--   We will need `set-t` to do this.
+
+record category-t {lv : level-t} : type (lsucc lv) where
   field
     object-t : type lv
     morphism-t : object-t -> object-t -> type lv
@@ -25,6 +32,12 @@ record category-t {lv : level-t} : type (lsuc lv) where
       (the-eqv-t (morphism-t a d)
         (compose f (compose g h))
         (compose (compose f g) h))
+
+  dom : {a b : object-t} -> (morphism-t a b) -> object-t
+  dom {a} {b} f = a
+
+  cod : {a b : object-t} -> (morphism-t a b) -> object-t
+  cod {a} {b} f = b
 
   record iso-t (a b : object-t) : type lv where
     field
