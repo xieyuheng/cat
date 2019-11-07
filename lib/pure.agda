@@ -19,8 +19,8 @@ lone = lsucc lzero
 ltwo : level-t
 ltwo = lsucc lone
 
-type0 : type ltwo
-type0 = type lone
+type0 : type lone
+type0 = type lzero
 
 type1 : type ltwo
 type1 = type lone
@@ -36,7 +36,7 @@ data eqv-t {lv : level-t} {A : type lv} (p : A) : A -> type lv where
   refl : eqv-t p p
 
 the-eqv-t : {lv : level-t} (A : type lv) (p : A) -> A -> type lv
-the-eqv-t A p q = eqv-t p q
+the-eqv-t A = eqv-t
 
 the-same : {lv : level-t} (A : type lv) (p : A) -> eqv-t p p
 the-same A p = refl
