@@ -2,35 +2,62 @@ module pure where
 
 open import Agda.Primitive public
 
--- type --
+-- level
 
-type : forall l -> Set (lsuc l)
-type l = Set l
-type0 = Set
-type1 = type lzero
+level-t : Set
+level-t = Level
 
-private
-  variable
-    l : Level
-    A B : type l
+lsucc : level-t -> level-t
+lsucc = lsuc
 
--- eqv --
+type : (lv : level-t) -> Set (lsucc lv)
+type lv = Set lv
 
-data eqv-t {A : type l} (q : A) : A -> type l where
-  eqv : (eqv-t q q)
+lone : level-t
+lone = lsucc lzero
 
-{-# BUILTIN EQUALITY eqv-t #-}
+ltwo : level-t
+ltwo = lsucc lone
 
-eqv-apply : forall {x y}
+type0 : type ltwo
+type0 = type lone
+
+type1 : type ltwo
+type1 = type lone
+
+-- the
+
+the : {lv : level-t} (A : type lv) -> (p : A) -> A
+the A p = p
+
+-- eqv
+
+data eqv-t {lv : level-t} {A : type lv} (p : A) : A -> type lv where
+  refl : eqv-t p p
+
+the-eqv-t : {lv : level-t} (A : type lv) (p : A) -> A -> type lv
+the-eqv-t A p q = eqv-t p q
+
+the-same : {lv : level-t} (A : type lv) (p : A) -> eqv-t p p
+the-same A p = refl
+
+same : {lv : level-t} {A : type lv} (p : A) -> eqv-t p p
+same p = refl
+
+eqv-apply :
+  {lv : level-t}
+  {A B : type lv} {x y : A} ->
   (f : A -> B) -> (eqv-t x y) -> (eqv-t (f x) (f y))
-eqv-apply f eqv = eqv
+eqv-apply f refl = refl
 
 eqv-compose :
-  {x y z : A} ->
+  {lv : level-t}
+  {A : type lv} {x y z : A} ->
   (eqv-t x y) -> (eqv-t y z) -> (eqv-t x z)
-eqv-compose eqv eqv = eqv
+eqv-compose refl refl = refl
 
 eqv-swap :
-  {x y : A} ->
+  {lv : level-t}
+  {A : type lv} {x y : A} ->
   (eqv-t x y) -> (eqv-t y x)
-eqv-swap eqv = eqv
+eqv-swap refl = refl

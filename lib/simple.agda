@@ -2,11 +2,7 @@ module simple where
 
 open import pure
 
-private
-  variable
-    l : Level
-
--- bool --
+-- bool
 
 data bool-t : type0 where
   true : bool-t
@@ -28,7 +24,7 @@ if : {n : _} {A : Set n} -> bool-t -> A -> A -> A
 if true x y = x
 if false x y = y
 
--- nat --
+-- nat
 
 data nat-t : type0 where
   zero : nat-t
@@ -59,7 +55,7 @@ nat-add-associate :
   (eqv-t
     (nat-add x (nat-add y z))
     (nat-add (nat-add x y) z))
-nat-add-associate zero y z = eqv
+nat-add-associate zero y z = refl
 nat-add-associate (succ x) y z =
   eqv-apply succ (nat-add-associate x y z)
 
@@ -68,7 +64,7 @@ nat-add-zero-commute :
   (eqv-t
     (nat-add zero x)
     (nat-add x zero))
-nat-add-zero-commute zero = eqv
+nat-add-zero-commute zero = refl
 nat-add-zero-commute (succ x) =
   eqv-apply succ (nat-add-zero-commute x)
 
@@ -77,7 +73,7 @@ nat-add-succ-commute-1 :
   (eqv-t
     (nat-add (succ x) y)
     (succ (nat-add x y)))
-nat-add-succ-commute-1 zero y = eqv
+nat-add-succ-commute-1 zero y = refl
 nat-add-succ-commute-1 (succ x) y =
   eqv-apply succ (nat-add-succ-commute-1 x y)
 
@@ -86,7 +82,7 @@ nat-add-succ-commute-2 :
   (eqv-t
     (nat-add x (succ y))
     (succ (nat-add x y)))
-nat-add-succ-commute-2 zero y = eqv
+nat-add-succ-commute-2 zero y = refl
 nat-add-succ-commute-2 (succ x) y =
   eqv-apply succ (nat-add-succ-commute-2 x y)
 
@@ -102,11 +98,11 @@ nat-add-commute (succ x) y =
     (eqv-apply succ (nat-add-commute x y))
     (eqv-swap (nat-add-succ-commute-2 y x))
 
--- list --
+-- list
 
--- vec --
+-- vec
 
-data vec-t (A : type l) : nat-t -> type l where
+data vec-t {lv : level-t} (A : type lv) : nat-t -> type lv where
   null-vec : vec-t A zero
   cons-vec : {n : nat-t} ->
     A -> (vec-t A n) -> (vec-t A (succ n))
