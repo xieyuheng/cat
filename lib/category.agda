@@ -87,6 +87,17 @@ record category-t {lv : level-t} : type (lsucc lv) where
     terminal-iso-unique : the-eqv-t (morphism-t x y) f g
     terminal-iso-unique = t1 .morphism-unique f g
 
+  module _
+    (t0 t1 : terminal-t)
+    (i0 i1 : iso-t (t0 .object) (t1 .object)) where
+    private
+      x = t0 .object
+      y = t1 .object
+      f = i0 .morphism
+      g = i1 .morphism
+    terminal-iso-unique-2 : the-eqv-t (iso-t x y) i0 i1
+    terminal-iso-unique-2 = {!!}
+
   -- initial
   -- initial-iso
   -- initial-iso-unique
