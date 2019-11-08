@@ -38,17 +38,44 @@ nat-mul : nat-t -> nat-t -> nat-t
 nat-mul zero y = zero
 nat-mul (succ x) y = nat-add y (nat-mul x y)
 
-nat-lt-p : nat-t -> nat-t -> bool-t
-nat-lt-p zero zero = false
-nat-lt-p zero (succ _) = true
-nat-lt-p (succ _) zero = false
-nat-lt-p (succ x) (succ y) = nat-lt-p x y
+data bot : type0 where
 
-nat-eq-p : nat-t -> nat-t -> bool-t
-nat-eq-p zero zero = true
-nat-eq-p zero (succ _) = false
-nat-eq-p (succ _) zero = false
-nat-eq-p (succ x) (succ y) = nat-eq-p x y
+bot-elim : bot ->
+  {lv2 : level-t} -> {whatever : type lv2} -> whatever
+bot-elim ()
+
+negate : {lv : level-t} -> type lv -> type lv
+negate a = a -> bot
+
+data dec {lv : level-t} (A : type lv) : type lv where
+  yes : A -> dec A
+  no  : negate A -> dec A
+
+nat-eq-inj : (a b : nat-t) -> eqv-t (succ a) (succ b) -> eqv-t a b
+nat-eq-inj a b refl = refl
+
+nat-eq-p : (a b : nat-t) -> dec (eqv-t a b)
+nat-eq-p zero zero = yes refl
+nat-eq-p zero (succ _) = no \ ()
+nat-eq-p (succ _) zero = no \ ()
+nat-eq-p (succ x) (succ y) with nat-eq-p x y
+... | yes p = yes (eqv-apply succ p)
+... | no  p = no \ { refl -> p refl }
+
+data nat-lt : (a b : nat-t) -> type0 where
+  zero-lt-n    : {n : nat-t} -> nat-lt zero n
+  succ-lt-succ : {m n : nat-t} -> (p : nat-lt m n) -> nat-lt (succ m) (succ n)
+
+nat-lt-inj : (a b : nat-t) -> nat-lt (succ a) (succ b) -> nat-lt a b
+nat-lt-inj a b (succ-lt-succ p) = p
+
+nat-lt-p : (a b : nat-t) -> dec (nat-lt a b)
+nat-lt-p zero zero = yes zero-lt-n
+nat-lt-p zero (succ _) = yes zero-lt-n
+nat-lt-p (succ _) zero = no \ ()
+nat-lt-p (succ x) (succ y) with nat-lt-p x y
+... | yes p = yes (succ-lt-succ p)
+... | no  p = no \ { (succ-lt-succ q) -> p q }
 
 nat-add-associate :
   (x y z : nat-t) ->
@@ -99,6 +126,10 @@ nat-add-commute (succ x) y =
     (eqv-swap (nat-add-succ-commute-2 y x))
 
 -- list
+
+data list-t {lv : level-t} (A : type lv) : type lv where
+  null-list : list-t A
+  cons-list :  A -> (list-t A) -> (list-t A)
 
 -- vec
 
