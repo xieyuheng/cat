@@ -1,3 +1,5 @@
+{-# OPTIONS --prop --safe #-}
+
 module simple where
 
 open import pure
@@ -44,10 +46,10 @@ bot-elim : bot ->
   {lv2 : level-t} -> {whatever : type lv2} -> whatever
 bot-elim ()
 
-negate : {lv : level-t} -> type lv -> type lv
+negate : {lv : level-t} -> prop lv -> type lv
 negate a = a -> bot
 
-data dec {lv : level-t} (A : type lv) : type lv where
+data dec {lv : level-t} (A : prop lv) : type lv where
   yes : A -> dec A
   no  : negate A -> dec A
 
@@ -60,9 +62,9 @@ nat-eq-p zero (succ _) = no \ ()
 nat-eq-p (succ _) zero = no \ ()
 nat-eq-p (succ x) (succ y) with nat-eq-p x y
 ... | yes p = yes (eqv-apply succ p)
-... | no  p = no \ { refl -> p refl }
+... | no  p = no \ q -> p (nat-eq-inj x y q)
 
-data nat-lt : (a b : nat-t) -> type0 where
+data nat-lt : (a b : nat-t) -> prop0 where
   zero-lt-n    : {n : nat-t} -> nat-lt zero n
   succ-lt-succ : {m n : nat-t} -> (p : nat-lt m n) -> nat-lt (succ m) (succ n)
 
@@ -75,7 +77,7 @@ nat-lt-p zero (succ _) = yes zero-lt-n
 nat-lt-p (succ _) zero = no \ ()
 nat-lt-p (succ x) (succ y) with nat-lt-p x y
 ... | yes p = yes (succ-lt-succ p)
-... | no  p = no \ { (succ-lt-succ q) -> p q }
+... | no  p = no \ q -> p (nat-lt-inj x y q)
 
 nat-add-associate :
   (x y z : nat-t) ->
