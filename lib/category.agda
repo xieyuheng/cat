@@ -82,13 +82,11 @@ record category-t {lv : level-t} : type (lsucc lv) where
   -- initial-iso
   -- initial-iso-unique
 
-module _ {lv : level-t} (cat : category-t {lv}) where
-  open category-t
-  opposite : category-t {lv}
-  opposite .object-t = cat .object-t
-  opposite .morphism-t a b = cat .morphism-t b a
-  opposite .id = cat .id
-  opposite .compose f g = cat .compose g f
-  opposite .left-id = cat .right-id
-  opposite .right-id = cat .left-id
-  opposite .associative f g h = eqv-swap (cat .associative h g f)
+  opposite : category-t
+  opposite .object-t = object-t
+  opposite .morphism-t a b = morphism-t b a
+  opposite .id = id
+  opposite .compose f g = compose g f
+  opposite .left-id = right-id
+  opposite .right-id = left-id
+  opposite .associative f g h = eqv-swap (associative h g f)
