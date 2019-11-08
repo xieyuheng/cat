@@ -85,30 +85,6 @@ record category-t {lv : level-t} : type (lsucc lv) where
     terminal-iso .left-inverse = t0 .morphism-unique (compose f g) (id x)
     terminal-iso .right-inverse = t1 .morphism-unique (compose g f) (id y)
 
-  module _
-    (t0 t1 : terminal-t)
-    (i0 i1 : iso-t (t0 .object) (t1 .object)) where
-    private
-      x = t0 .object
-      y = t1 .object
-      f = i0 .morphism
-      g = i1 .morphism
-    terminal-iso-unique : the-eqv-t (morphism-t x y) f g
-    terminal-iso-unique = t1 .morphism-unique f g
-
-  module _
-    (t0 t1 : terminal-t)
-    (i0 i1 : iso-t (t0 .object) (t1 .object)) where
-    private
-      x = t0 .object
-      y = t1 .object
-      h1 : the-eqv-t (morphism-t x y) (i0 .morphism) (i1 .morphism)
-      h1 = t1 .morphism-unique (i0 .morphism) (i1 .morphism)
-      h2 : the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse)
-      h2 = t0 .morphism-unique (i0 .inverse) (i1 .inverse)
-    terminal-iso-unique-2 : the-eqv-t (iso-t x y) i0 i1
-    terminal-iso-unique-2 = iso-t-eta i0 i1 h1 h2
-
   module _ (t0 t1 : terminal-t) where
     private
       x = t0 .object
@@ -119,13 +95,14 @@ record category-t {lv : level-t} : type (lsucc lv) where
         g = i1 .morphism
         f-inv = i0 .inverse
         g-inv = i1 .inverse
-      terminal-iso-unique-3 : the-eqv-t (iso-t x y) i0 i1
-      terminal-iso-unique-3 = {!!} where
+      terminal-iso-unique : the-eqv-t (iso-t x y) i0 i1
+      terminal-iso-unique = iso-t-eta i0 i1 h1 h2 where
         h1 : the-eqv-t (morphism-t x y) f g
         h1 = t1 .morphism-unique f g
         h2 : the-eqv-t (morphism-t y x) f-inv g-inv
         h2 = t0 .morphism-unique f-inv g-inv
 
+  -- TODO
   -- initial
   -- initial-iso
   -- initial-iso-unique
