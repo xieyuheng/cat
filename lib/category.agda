@@ -93,10 +93,12 @@ record category-t {lv : level-t} : type (lsucc lv) where
     private
       x = t0 .object
       y = t1 .object
-      f = i0 .morphism
-      g = i1 .morphism
     terminal-iso-unique-2 : the-eqv-t (iso-t x y) i0 i1
-    terminal-iso-unique-2 = {!!}
+    terminal-iso-unique-2 = {!!} where
+      h1 : the-eqv-t (morphism-t x y) (i0 .morphism) (i1 .morphism)
+      h1 = t1 .morphism-unique (i0 .morphism) (i1 .morphism)
+      h2 : the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse)
+      h2 = t0 .morphism-unique (i0 .inverse) (i1 .inverse)
 
   -- initial
   -- initial-iso
