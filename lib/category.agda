@@ -1,3 +1,5 @@
+{-# OPTIONS --prop --safe #-}
+
 module category where
 
 open import pure
@@ -41,6 +43,7 @@ record category-t {lv : level-t} : type (lsucc lv) where
   cod {a} {b} f = b
 
   record iso-t (a b : object-t) : type lv where
+    constructor iso-intro
     field
       morphism : morphism-t a b
       inverse : morphism-t b a
@@ -53,6 +56,12 @@ record category-t {lv : level-t} : type (lsucc lv) where
           (compose inverse morphism)
           (id b))
   open iso-t
+
+  iso-t-eta : forall {x y} (i0 i1 : iso-t x y) ->
+    the-eqv-t (morphism-t x y) (i0 .morphism) (i1 .morphism) ->
+    the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse) ->
+    the-eqv-t (iso-t x y) i0 i1
+  iso-t-eta (iso-intro f0 g0 p0 q0) (iso-intro f0 g0 p1 q1) refl refl = refl
 
   record terminal-t : type lv where
     field
@@ -93,12 +102,12 @@ record category-t {lv : level-t} : type (lsucc lv) where
     private
       x = t0 .object
       y = t1 .object
-    terminal-iso-unique-2 : the-eqv-t (iso-t x y) i0 i1
-    terminal-iso-unique-2 = {!!} where
       h1 : the-eqv-t (morphism-t x y) (i0 .morphism) (i1 .morphism)
       h1 = t1 .morphism-unique (i0 .morphism) (i1 .morphism)
       h2 : the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse)
       h2 = t0 .morphism-unique (i0 .inverse) (i1 .inverse)
+    terminal-iso-unique-2 : the-eqv-t (iso-t x y) i0 i1
+    terminal-iso-unique-2 = iso-t-eta i0 i1 h1 h2
 
   module _ (t0 t1 : terminal-t) where
     private
