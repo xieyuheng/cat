@@ -52,6 +52,7 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (the-eqv-t (morphism-t b b)
           (compose inverse morphism)
           (id b))
+  open iso-t
 
   record terminal-t : type lv where
     field
@@ -61,10 +62,9 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (f : morphism-t x object)
         (g : morphism-t x object) ->
         (the-eqv-t (morphism-t x object) f g)
+  open terminal-t
 
   module _ (t0 t1 : terminal-t) where
-    open iso-t
-    open terminal-t
     private
       x = t0 .object
       y = t1 .object
@@ -76,8 +76,17 @@ record category-t {lv : level-t} : type (lsucc lv) where
     terminal-iso .left-inverse = t0 .morphism-unique (compose f g) (id x)
     terminal-iso .right-inverse = t1 .morphism-unique (compose g f) (id y)
 
-  -- TODO
-  -- terminal-iso-unique
+  module _
+    (t0 t1 : terminal-t)
+    (i0 i1 : iso-t (t0 .object) (t1 .object)) where
+    private
+      x = t0 .object
+      y = t1 .object
+      f = i0 .morphism
+      g = i1 .morphism
+    terminal-iso-unique : the-eqv-t (morphism-t x y) f g
+    terminal-iso-unique = t1 .morphism-unique f g
+
   -- initial
   -- initial-iso
   -- initial-iso-unique
