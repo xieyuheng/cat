@@ -77,7 +77,7 @@ eqv-swap refl = refl
 
 -- prop
 
-data and-t {lv : level-t} (A : prop lv) (B : prop lv) : prop lv where
+data and-t {lv : level-t} (A : prop lv) (B : prop lv) : type lv where
   and : (a : A) -> (b : B) -> and-t A B
 
 -- sigma

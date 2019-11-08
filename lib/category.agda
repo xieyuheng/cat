@@ -22,24 +22,24 @@ record category-t {lv : level-t} : type (lsucc lv) where
       morphism-t a b -> morphism-t b c -> morphism-t a c
     left-id : {a b : object-t} ->
       (f : morphism-t a b) ->
-      (the-eqv-t (morphism-t a b)
-        (compose (id a) f) f)
+      the-eqv-t (morphism-t a b)
+        (compose (id a) f) f
     right-id : {a b : object-t} ->
       (f : morphism-t a b) ->
-      (the-eqv-t (morphism-t a b)
-        (compose f (id b)) f)
+      the-eqv-t (morphism-t a b)
+        (compose f (id b)) f
     associative : {a b c d : object-t} ->
       (f : morphism-t a b) ->
       (g : morphism-t b c) ->
       (h : morphism-t c d) ->
-      (the-eqv-t (morphism-t a d)
+      the-eqv-t (morphism-t a d)
         (compose f (compose g h))
-        (compose (compose f g) h))
+        (compose (compose f g) h)
 
-  dom : {a b : object-t} -> (morphism-t a b) -> object-t
+  dom : {a b : object-t} -> morphism-t a b -> object-t
   dom {a} {b} f = a
 
-  cod : {a b : object-t} -> (morphism-t a b) -> object-t
+  cod : {a b : object-t} -> morphism-t a b -> object-t
   cod {a} {b} f = b
 
   record iso-t (a b : object-t) : type lv where
@@ -48,13 +48,13 @@ record category-t {lv : level-t} : type (lsucc lv) where
       morphism : morphism-t a b
       inverse : morphism-t b a
       left-inverse :
-        (the-eqv-t (morphism-t a a)
+        the-eqv-t (morphism-t a a)
           (compose morphism inverse)
-          (id a))
+          (id a)
       right-inverse :
-        (the-eqv-t (morphism-t b b)
+        the-eqv-t (morphism-t b b)
           (compose inverse morphism)
-          (id b))
+          (id b)
   open iso-t
 
   iso-t-eta : {x y : object-t} (i0 i1 : iso-t x y) ->
@@ -66,11 +66,11 @@ record category-t {lv : level-t} : type (lsucc lv) where
   record terminal-t : type lv where
     field
       object : object-t
-      morphism : (x : object-t) -> (morphism-t x object)
+      morphism : (x : object-t) -> morphism-t x object
       morphism-unique : {x : object-t}
         (f : morphism-t x object)
         (g : morphism-t x object) ->
-        (the-eqv-t (morphism-t x object) f g)
+        the-eqv-t (morphism-t x object) f g
   open terminal-t
 
   module _ (t0 t1 : terminal-t) where
@@ -103,9 +103,7 @@ record category-t {lv : level-t} : type (lsucc lv) where
         h2 = t0 .morphism-unique f-inv g-inv
 
   -- TODO
-  -- initial
-  -- initial-iso
-  -- initial-iso-unique
+  -- initial-t
 
   opposite : category-t
   opposite .object-t = object-t
@@ -126,17 +124,32 @@ record category-t {lv : level-t} : type (lsucc lv) where
   record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
-      factor : (cand : product-candidate-t fst snd) -> (morphism-t (cand .object) (this .object))
+      factorize : (cand : product-candidate-t fst snd) -> morphism-t (cand .object) (this .object)
       factor-commute : {cand : product-candidate-t fst snd} ->
-        (and-t
+        (factor : morphism-t (cand .object) (this .object)) ->
+        and-t
           (the-eqv-t (morphism-t (cand .object) fst)
-            (compose (factor cand) (this .fst-proj))
+            (compose factor (this .fst-proj))
             (cand .fst-proj))
           (the-eqv-t (morphism-t (cand .object) snd)
-            (compose (factor cand) (this .snd-proj))
-            (cand .snd-proj)))
+            (compose factor (this .snd-proj))
+            (cand .snd-proj))
+      factorize-commute : {cand : product-candidate-t fst snd} ->
+        -- factor-commute (factorize cand)
+        and-t
+          (the-eqv-t (morphism-t (cand .object) fst)
+            (compose (factorize cand) (this .fst-proj))
+            (cand .fst-proj))
+          (the-eqv-t (morphism-t (cand .object) snd)
+            (compose (factorize cand) (this .snd-proj))
+            (cand .snd-proj))
       factor-unique : {cand : product-candidate-t fst snd} ->
         (f : morphism-t (cand .object) (this .object)) ->
+        -- factor-commute f ->
         (g : morphism-t (cand .object) (this .object)) ->
-        (eqv-t f g)
+        -- factor-commute g ->
+        eqv-t f g
   open product-t
+
+  -- TODO
+  -- sum-t
