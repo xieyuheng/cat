@@ -139,7 +139,8 @@ record category-t {lv : level-t} : type (lsucc lv) where
   record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
-      factorize : (cand : product-candidate-t fst snd) -> morphism-t (cand .object) (this .object)
+      factorize : (cand : product-candidate-t fst snd) ->
+        morphism-t (cand .object) (this .object)
       factorize-commute : {cand : product-candidate-t fst snd} ->
         product-factor-commute fst snd this cand (factorize cand)
       factor-unique : {cand : product-candidate-t fst snd} ->
