@@ -74,3 +74,13 @@ eqv-swap :
   {A : type lv} {x y : A} ->
   (eqv-t x y) -> (eqv-t y x)
 eqv-swap refl = refl
+
+-- prop
+
+data and-t {lv : level-t} (A : prop lv) (B : prop lv) : prop lv where
+  and : (a : A) -> (b : B) -> and-t A B
+
+-- sigma
+
+data sigma-t {lv : level-t} (A : type lv) (D : A -> type lv) : type lv where
+  pair : (a : A) -> (b : D a) -> sigma-t A D

@@ -115,3 +115,32 @@ record category-t {lv : level-t} : type (lsucc lv) where
   opposite .left-id = right-id
   opposite .right-id = left-id
   opposite .associative f g h = eqv-swap (associative h g f)
+
+  record product-candidate-t (fst snd : object-t) : type lv where
+    field
+      object : object-t
+      fst-proj : morphism-t object fst
+      snd-proj : morphism-t object snd
+  open product-candidate-t
+
+  record product-t (fst snd : object-t) : type lv where
+    field
+      this : product-candidate-t fst snd
+      factor : (cand : product-candidate-t fst snd) -> (morphism-t (cand .object) (this .object))
+      factor-commute : {cand : product-candidate-t fst snd} ->
+        (and-t
+          (the-eqv-t (morphism-t (cand .object) fst)
+            (compose (factor cand) (this .fst-proj))
+            (cand .fst-proj))
+          (the-eqv-t (morphism-t (cand .object) snd)
+            (compose (factor cand) (this .snd-proj))
+            (cand .snd-proj)))
+      factor-unique : {cand : product-candidate-t fst snd} ->
+        (f : morphism-t (cand .object) (this .object)) ->
+        (g : morphism-t (cand .object) (this .object)) ->
+        (eqv-t f g)
+
+    -- object = this.object
+    -- fst-proj = this.fst-proj
+    -- snd-proj = this.snd-proj
+  open product-t
