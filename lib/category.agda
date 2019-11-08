@@ -121,33 +121,32 @@ record category-t {lv : level-t} : type (lsucc lv) where
       snd-proj : morphism-t object snd
   open product-candidate-t
 
+  product-factor-commute :
+    (fst snd : object-t) ->
+    (this : product-candidate-t fst snd) ->
+    (cand : product-candidate-t fst snd) ->
+    (factor : morphism-t (cand .object) (this .object)) ->
+    type lv
+  product-factor-commute fst snd this cand factor =
+    and-t
+      (the-eqv-t (morphism-t (cand .object) fst)
+        (compose factor (this .fst-proj))
+        (cand .fst-proj))
+      (the-eqv-t (morphism-t (cand .object) snd)
+        (compose factor (this .snd-proj))
+        (cand .snd-proj))
+
   record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
       factorize : (cand : product-candidate-t fst snd) -> morphism-t (cand .object) (this .object)
-      factor-commute : {cand : product-candidate-t fst snd} ->
-        (factor : morphism-t (cand .object) (this .object)) ->
-        and-t
-          (the-eqv-t (morphism-t (cand .object) fst)
-            (compose factor (this .fst-proj))
-            (cand .fst-proj))
-          (the-eqv-t (morphism-t (cand .object) snd)
-            (compose factor (this .snd-proj))
-            (cand .snd-proj))
       factorize-commute : {cand : product-candidate-t fst snd} ->
-        -- factor-commute (factorize cand)
-        and-t
-          (the-eqv-t (morphism-t (cand .object) fst)
-            (compose (factorize cand) (this .fst-proj))
-            (cand .fst-proj))
-          (the-eqv-t (morphism-t (cand .object) snd)
-            (compose (factorize cand) (this .snd-proj))
-            (cand .snd-proj))
+        product-factor-commute fst snd this cand (factorize cand)
       factor-unique : {cand : product-candidate-t fst snd} ->
         (f : morphism-t (cand .object) (this .object)) ->
-        -- factor-commute f ->
+        product-factor-commute fst snd this cand f ->
         (g : morphism-t (cand .object) (this .object)) ->
-        -- factor-commute g ->
+        product-factor-commute fst snd this cand g ->
         eqv-t f g
   open product-t
 
