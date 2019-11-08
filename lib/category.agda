@@ -100,6 +100,23 @@ record category-t {lv : level-t} : type (lsucc lv) where
       h2 : the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse)
       h2 = t0 .morphism-unique (i0 .inverse) (i1 .inverse)
 
+  module _ (t0 t1 : terminal-t) where
+    private
+      x = t0 .object
+      y = t1 .object
+    module _ (i0 i1 : iso-t x y) where
+      private
+        f = i0 .morphism
+        g = i1 .morphism
+        f-inv = i0 .inverse
+        g-inv = i1 .inverse
+      terminal-iso-unique-3 : the-eqv-t (iso-t x y) i0 i1
+      terminal-iso-unique-3 = {!!} where
+        h1 : the-eqv-t (morphism-t x y) f g
+        h1 = t1 .morphism-unique f g
+        h2 : the-eqv-t (morphism-t y x) f-inv g-inv
+        h2 = t0 .morphism-unique f-inv g-inv
+
   -- initial
   -- initial-iso
   -- initial-iso-unique
