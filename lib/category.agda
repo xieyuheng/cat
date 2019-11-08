@@ -139,8 +139,4 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (f : morphism-t (cand .object) (this .object)) ->
         (g : morphism-t (cand .object) (this .object)) ->
         (eqv-t f g)
-
-    -- object = this.object
-    -- fst-proj = this.fst-proj
-    -- snd-proj = this.snd-proj
   open product-t
