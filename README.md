@@ -16,7 +16,9 @@ record category-t (lv : level-t) : type (lsucc lv) where
     morphism-t : object-t -> object-t -> type lv
     id : (a : object-t) -> morphism-t a a
     compose : {a b c : object-t} ->
-      morphism-t a b -> morphism-t b c -> morphism-t a c
+      morphism-t a b ->
+      morphism-t b c ->
+      morphism-t a c
     left-id : {a b : object-t} ->
       (f : morphism-t a b) ->
       the-eqv-t (morphism-t a b)
