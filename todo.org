@@ -2,3 +2,5 @@
 - example semantics for simply typed lambda calculus
 - how to handle dual construction?
 - create agda library file
+- abstract `unique`
+- abstract `universal construction`
