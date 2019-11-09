@@ -11,6 +11,8 @@ open import simple
 --   We will need equivalence relation to do this.
 -- - How should we handle `homset`?
 --   We will need `set-t` to do this.
+-- - By `object-t : type lv` our model of category theory is limited to small categories,
+--   where objects form a set.
 -- We delay these decisions until we running into troubles.
 
 record category-t (lv : level-t) : type (lsucc lv) where
