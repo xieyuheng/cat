@@ -13,7 +13,7 @@ open import simple
 --   We will need `set-t` to do this.
 -- We delay these decisions until we running into troubles.
 
-record category-t {lv : level-t} : type (lsucc lv) where
+record category-t (lv : level-t) : type (lsucc lv) where
   field
     object-t : type lv
     morphism-t : object-t -> object-t -> type lv
@@ -36,11 +36,11 @@ record category-t {lv : level-t} : type (lsucc lv) where
         (compose f (compose g h))
         (compose (compose f g) h)
 
-  dom : {a b : object-t} -> morphism-t a b -> object-t
-  dom {a} {b} f = a
+  morphism-dom : {a b : object-t} -> morphism-t a b -> object-t
+  morphism-dom {a} {b} f = a
 
-  cod : {a b : object-t} -> morphism-t a b -> object-t
-  cod {a} {b} f = b
+  morphism-cod : {a b : object-t} -> morphism-t a b -> object-t
+  morphism-cod {a} {b} f = b
 
   record iso-t (a b : object-t) : type lv where
     constructor iso-intro
@@ -105,7 +105,7 @@ record category-t {lv : level-t} : type (lsucc lv) where
   -- TODO
   -- initial-t
 
-  opposite : category-t
+  opposite : category-t lv
   opposite .object-t = object-t
   opposite .morphism-t a b = morphism-t b a
   opposite .id = id
