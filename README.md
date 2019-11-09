@@ -7,8 +7,6 @@ An agda library for categorical semantics.
 
 ## Example
 
-**Highlight**
-
 ``` agda
 record category-t (lv : level-t) : type (lsucc lv) where
   field
