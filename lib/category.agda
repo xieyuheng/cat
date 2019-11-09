@@ -22,15 +22,15 @@ record category-t (lv : level-t) : type (lsucc lv) where
       morphism-t a b ->
       morphism-t b c ->
       morphism-t a c
-    left-id : {a b : object-t} ->
+    id-left : {a b : object-t} ->
       (f : morphism-t a b) ->
       the-eqv-t (morphism-t a b)
         (compose (id a) f) f
-    right-id : {a b : object-t} ->
+    id-right : {a b : object-t} ->
       (f : morphism-t a b) ->
       the-eqv-t (morphism-t a b)
         (compose f (id b)) f
-    associative : {a b c d : object-t} ->
+    compose-associative : {a b c d : object-t} ->
       (f : morphism-t a b) ->
       (g : morphism-t b c) ->
       (h : morphism-t c d) ->
@@ -49,11 +49,11 @@ record category-t (lv : level-t) : type (lsucc lv) where
     field
       morphism : morphism-t a b
       inverse : morphism-t b a
-      left-inverse :
+      inverse-left :
         the-eqv-t (morphism-t a a)
           (compose morphism inverse)
           (id a)
-      right-inverse :
+      inverse-right :
         the-eqv-t (morphism-t b b)
           (compose inverse morphism)
           (id b)
@@ -84,8 +84,8 @@ record category-t (lv : level-t) : type (lsucc lv) where
     terminal-iso : iso-t x y
     terminal-iso .morphism = f
     terminal-iso .inverse = g
-    terminal-iso .left-inverse = t0 .morphism-unique (compose f g) (id x)
-    terminal-iso .right-inverse = t1 .morphism-unique (compose g f) (id y)
+    terminal-iso .inverse-left = t0 .morphism-unique (compose f g) (id x)
+    terminal-iso .inverse-right = t1 .morphism-unique (compose g f) (id y)
 
   module _ (t0 t1 : terminal-t) where
     private
@@ -112,9 +112,10 @@ record category-t (lv : level-t) : type (lsucc lv) where
   opposite .morphism-t a b = morphism-t b a
   opposite .id = id
   opposite .compose f g = compose g f
-  opposite .left-id = right-id
-  opposite .right-id = left-id
-  opposite .associative f g h = eqv-swap (associative h g f)
+  opposite .id-left = id-right
+  opposite .id-right = id-left
+  opposite .compose-associative f g h =
+    eqv-swap (compose-associative h g f)
 
   record product-candidate-t (fst snd : object-t) : type lv where
     field

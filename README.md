@@ -19,15 +19,15 @@ record category-t (lv : level-t) : type (lsucc lv) where
       morphism-t a b ->
       morphism-t b c ->
       morphism-t a c
-    left-id : {a b : object-t} ->
+    id-left : {a b : object-t} ->
       (f : morphism-t a b) ->
       the-eqv-t (morphism-t a b)
         (compose (id a) f) f
-    right-id : {a b : object-t} ->
+    id-right : {a b : object-t} ->
       (f : morphism-t a b) ->
       the-eqv-t (morphism-t a b)
         (compose f (id b)) f
-    associative : {a b c d : object-t} ->
+    compose-associative : {a b c d : object-t} ->
       (f : morphism-t a b) ->
       (g : morphism-t b c) ->
       (h : morphism-t c d) ->
