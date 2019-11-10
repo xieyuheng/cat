@@ -3,6 +3,8 @@
 module category where
 
 open import pure
+open eqv-reasoning
+
 open import simple
 
 -- NOTE
@@ -161,19 +163,20 @@ record category-t (lv : level-t) : type (lsucc lv) where
     product-iso .morphism = f
     product-iso .inverse = g
     product-iso .inverse-left =
-      p0 .factor-unique
-        (p0 .this)
-        (compose f g)
-        (the (eqv-t (compose (compose f g) (p0 .this .fst-proj)) (p0 .this .fst-proj))
-          (eqv-compose
-            (eqv-swap (compose-associative f g (p0 .this .fst-proj)))
-            (eqv-replace
-              (the (eqv-t (p1 .this .fst-proj) (compose g (p0 .this .fst-proj)))
-                (eqv-swap (and-fst (p0 .factorize-commute (p1 .this)))))
-              (\ h -> eqv-t (compose f h) (p0 .this .fst-proj))
-              (the (eqv-t (compose f (p1 .this .fst-proj)) (p0 .this .fst-proj))
-                (and-fst (p1 .factorize-commute (p0 .this)))))))
-        (the (eqv-t (compose (compose f g) (p0 .this .snd-proj)) (p0 .this .snd-proj))
+      let
+        eqv-f-g-fst : eqv-t (compose (compose f g) (p0 .this .fst-proj)) (p0 .this .fst-proj)
+        eqv-f-g-fst =
+          eqv-begin
+            compose (compose f g) (p0 .this .fst-proj)
+          =< eqv-swap (compose-associative f g (p0 .this .fst-proj)) >
+            compose f (compose g (p0 .this .fst-proj))
+          =< eqv-apply (compose f) (and-fst (p0 .factorize-commute (p1 .this))) >
+            compose f (p1 .this .fst-proj)
+          =< and-fst (p1 .factorize-commute (p0 .this)) >
+            p0 .this .fst-proj
+          eqv-end
+        eqv-f-g-snd : eqv-t (compose (compose f g) (p0 .this .snd-proj)) (p0 .this .snd-proj)
+        eqv-f-g-snd =
           (eqv-compose
             (eqv-swap (compose-associative f g (p0 .this .snd-proj)))
             (eqv-replace
@@ -181,12 +184,12 @@ record category-t (lv : level-t) : type (lsucc lv) where
                 (eqv-swap (and-snd (p0 .factorize-commute (p1 .this)))))
               (\ h -> eqv-t (compose f h) (p0 .this .snd-proj))
               (the (eqv-t (compose f (p1 .this .snd-proj)) (p0 .this .snd-proj))
-                (and-snd (p1 .factorize-commute (p0 .this)))))))
-        (id x)
-        (the (eqv-t (compose (id x) (p0 .this .fst-proj)) (p0 .this .fst-proj))
-          (id-left (p0 .this .fst-proj)))
-        (the (eqv-t (compose (id x) (p0 .this .snd-proj)) (p0 .this .snd-proj))
-          (id-left (p0 .this .snd-proj)))
+                (and-snd (p1 .factorize-commute (p0 .this))))))
+      in
+      p0 .factor-unique
+        (p0 .this)
+        (compose f g) eqv-f-g-fst eqv-f-g-snd
+        (id x) (id-left (p0 .this .fst-proj)) (id-left (p0 .this .snd-proj))
     product-iso .inverse-right = {!!}
 
   module _ {fst snd : object-t} (p0 p1 : product-t fst snd) where
