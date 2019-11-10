@@ -154,7 +154,6 @@ record category-t (lv : level-t) : type (lsucc lv) where
       y = p1 .this .object
       f = p1 .factorize (p0 .this)
       g = p0 .factorize (p1 .this)
-
     product-iso : iso-t x y
     product-iso .morphism = f
     product-iso .inverse = g
@@ -187,7 +186,13 @@ record category-t (lv : level-t) : type (lsucc lv) where
           (id-left (p0 .this .snd-proj)))
     product-iso .inverse-right = {!!}
 
-  -- product-iso-unique
+  module _ {fst snd : object-t} (p0 p1 : product-t fst snd) where
+    private
+      x = p0 .this .object
+      y = p1 .this .object
+    module _ (i0 i1 : iso-t x y) where
+      product-iso-unique : the-eqv-t (iso-t x y) i0 i1
+      product-iso-unique = {!!}
 
   -- TODO
   -- sum-t
