@@ -87,15 +87,14 @@ eqv-swap :
   eqv-t x y -> eqv-t y x
 eqv-swap refl = refl
 
-postulate
-  eqv-replace :
-    {lv : level-t} {A : type lv} {x y : A} ->
-    (equation : eqv-t x y) ->
-    {lv2 : level-t} ->
-    (motive : A -> prop lv2) ->
-    motive x ->
-    motive y
-  -- eqv-replace equation motive base = {!!}
+eqv-replace :
+  {lv : level-t} {A : type lv} {x y : A} ->
+  (equation : eqv-t x y) ->
+  {lv2 : level-t} ->
+  (motive : A -> prop lv2) ->
+  motive x ->
+  motive y
+eqv-replace refl motive base = base
 
 -- sigma
 

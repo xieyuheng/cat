@@ -126,6 +126,9 @@ record category-t (lv : level-t) : type (lsucc lv) where
       snd-proj : morphism-t object snd
   open product-candidate-t
 
+  -- TODO
+  -- product-commute-t
+
   record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
