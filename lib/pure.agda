@@ -1,4 +1,4 @@
-{-# OPTIONS --prop --safe #-}
+{-# OPTIONS --prop #-}
 
 module pure where
 
@@ -53,7 +53,7 @@ and-snd (and a b) = b
 
 -- the
 
-the : {lv : level-t} (A : type lv) -> (p : A) -> A
+the : {lv : level-t} (A : prop lv) -> (p : A) -> A
 the A p = p
 
 -- eqv
@@ -87,20 +87,15 @@ eqv-swap :
   eqv-t x y -> eqv-t y x
 eqv-swap refl = refl
 
---   { w : A |- C(w) type }
---   p : eqv_t(A, x, y)
---   base : C(x)
---   --------------------------
---   replace(p, base) : C(y)
-
-eqv-replace :
-  {lv : level-t} {A : type lv} {x y : A} ->
-  (equation : eqv-t x y) ->
-  {lv2 : level-t} ->
-  (motive : A -> type lv2) ->
-  motive x ->
-  motive y
-eqv-replace equation motive base = {!!}
+postulate
+  eqv-replace :
+    {lv : level-t} {A : type lv} {x y : A} ->
+    (equation : eqv-t x y) ->
+    {lv2 : level-t} ->
+    (motive : A -> prop lv2) ->
+    motive x ->
+    motive y
+  -- eqv-replace equation motive base = {!!}
 
 -- sigma
 

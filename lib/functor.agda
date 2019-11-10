@@ -1,4 +1,4 @@
-{-# OPTIONS --prop --safe #-}
+{-# OPTIONS --prop #-}
 
 module functor where
 

@@ -1,4 +1,4 @@
-{-# OPTIONS --prop --safe #-}
+{-# OPTIONS --prop #-}
 
 module category where
 
@@ -152,8 +152,6 @@ record category-t (lv : level-t) : type (lsucc lv) where
     private
       x = p0 .this .object
       y = p1 .this .object
-      x-id = p0 .factorize (p0 .this)
-      y-id = p1 .factorize (p1 .this)
       f = p1 .factorize (p0 .this)
       g = p0 .factorize (p1 .this)
 
@@ -163,12 +161,31 @@ record category-t (lv : level-t) : type (lsucc lv) where
     product-iso .inverse-left =
       p0 .factor-unique
         (p0 .this)
-        (compose f g) {!!} {!!}
-        -- (same (compose f (compose g (this p0 .fst-proj))))
-        -- (same (compose f (compose g (this p0 .fst-proj))))
-        (id x) {!!} {!!}
+        (compose f g)
+        (the (eqv-t (compose (compose f g) (p0 .this .fst-proj)) (p0 .this .fst-proj))
+          (eqv-compose
+            (eqv-swap (compose-associative f g (p0 .this .fst-proj)))
+            (eqv-replace
+              (the (eqv-t (p1 .this .fst-proj) (compose g (p0 .this .fst-proj)))
+                (eqv-swap (and-fst (p0 .factorize-commute (p1 .this)))))
+              (\ h -> eqv-t (compose f h) (p0 .this .fst-proj))
+              (the (eqv-t (compose f (p1 .this .fst-proj)) (p0 .this .fst-proj))
+                (and-fst (p1 .factorize-commute (p0 .this)))))))
+        (the (eqv-t (compose (compose f g) (p0 .this .snd-proj)) (p0 .this .snd-proj))
+          (eqv-compose
+            (eqv-swap (compose-associative f g (p0 .this .snd-proj)))
+            (eqv-replace
+              (the (eqv-t (p1 .this .snd-proj) (compose g (p0 .this .snd-proj)))
+                (eqv-swap (and-snd (p0 .factorize-commute (p1 .this)))))
+              (\ h -> eqv-t (compose f h) (p0 .this .snd-proj))
+              (the (eqv-t (compose f (p1 .this .snd-proj)) (p0 .this .snd-proj))
+                (and-snd (p1 .factorize-commute (p0 .this)))))))
+        (id x)
+        (the (eqv-t (compose (id x) (p0 .this .fst-proj)) (p0 .this .fst-proj))
+          (id-left (p0 .this .fst-proj)))
+        (the (eqv-t (compose (id x) (p0 .this .snd-proj)) (p0 .this .snd-proj))
+          (id-left (p0 .this .snd-proj)))
     product-iso .inverse-right = {!!}
-
 
   -- product-iso-unique
 
