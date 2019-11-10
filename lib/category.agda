@@ -167,13 +167,13 @@ record category-t (lv : level-t) : type (lsucc lv) where
         eqv-f-g-fst : eqv-t (compose (compose f g) (p0 .this .fst-proj)) (p0 .this .fst-proj)
         eqv-f-g-fst =
           eqv-begin
-            (compose (compose f g) (p0 .this .fst-proj))
-          =< (eqv-swap (compose-associative f g (p0 .this .fst-proj))) >
-            (compose f (compose g (p0 .this .fst-proj)))
-          =< (eqv-apply (compose f) (and-fst (p0 .factorize-commute (p1 .this)))) >
-            (compose f (p1 .this .fst-proj))
-          =< (and-fst (p1 .factorize-commute (p0 .this))) >
-            (p0 .this .fst-proj)
+            compose (compose f g) (p0 .this .fst-proj)
+          =[ eqv-swap (compose-associative f g (p0 .this .fst-proj)) ]
+            compose f (compose g (p0 .this .fst-proj))
+          =[ eqv-apply (compose f) (and-fst (p0 .factorize-commute (p1 .this))) ]
+            compose f (p1 .this .fst-proj)
+          =[ and-fst (p1 .factorize-commute (p0 .this)) ]
+            p0 .this .fst-proj
           eqv-end
         eqv-f-g-snd : eqv-t (compose (compose f g) (p0 .this .snd-proj)) (p0 .this .snd-proj)
         eqv-f-g-snd =

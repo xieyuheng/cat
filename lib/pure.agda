@@ -106,8 +106,8 @@ data sigma-t {lv : level-t} (A : type lv) (D : A -> type lv) : type lv where
 module eqv-reasoning {lv : level-t} {A : type lv} where
 
   infix  1 eqv-begin_
-  infixr 2 _=<>_
-  infixr 2 _=<_>_
+  infixr 2 _=[]_
+  infixr 2 _=[_]_
   infixr 2 _eqv-step-to_
   infixr 2 _eqv-step_to_
   infix  3 _eqv-end
@@ -117,16 +117,16 @@ module eqv-reasoning {lv : level-t} {A : type lv} where
     -> eqv-t x y
   eqv-begin eqv-x-y = eqv-x-y
 
-  _=<>_ : (x : A) {y : A}
+  _=[]_ : (x : A) {y : A}
     -> eqv-t x y
     -> eqv-t x y
-  x =<> eqv-x-y = eqv-x-y
+  x =[] eqv-x-y = eqv-x-y
 
-  _=<_>_ : (x : A) {y z : A}
+  _=[_]_ : (x : A) {y z : A}
     -> eqv-t x y
     -> eqv-t y z
     -> eqv-t x z
-  x =< eqv-x-y > eqv-y-z = eqv-compose eqv-x-y eqv-y-z
+  x =[ eqv-x-y ] eqv-y-z = eqv-compose eqv-x-y eqv-y-z
 
   _eqv-step-to_ : (x : A) {y : A}
     -> eqv-t x y
