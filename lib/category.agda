@@ -126,35 +126,51 @@ record category-t (lv : level-t) : type (lsucc lv) where
       snd-proj : morphism-t object snd
   open product-candidate-t
 
-  product-factor-commute :
-    (fst snd : object-t) ->
-    (this : product-candidate-t fst snd) ->
-    (cand : product-candidate-t fst snd) ->
-    (factor : morphism-t (cand .object) (this .object)) ->
-    type lv
-  product-factor-commute fst snd this cand factor =
-    and-t
-      (the-eqv-t (morphism-t (cand .object) fst)
-        (compose factor (this .fst-proj))
-        (cand .fst-proj))
-      (the-eqv-t (morphism-t (cand .object) snd)
-        (compose factor (this .snd-proj))
-        (cand .snd-proj))
-
   record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
-      factorize : (cand : product-candidate-t fst snd) ->
+      factorize :
+        (cand : product-candidate-t fst snd) ->
         morphism-t (cand .object) (this .object)
-      factorize-commute : {cand : product-candidate-t fst snd} ->
-        product-factor-commute fst snd this cand (factorize cand)
-      factor-unique : {cand : product-candidate-t fst snd} ->
+      factorize-commute :
+        (cand : product-candidate-t fst snd) ->
+        and-t
+          (eqv-t (compose (factorize cand) (this .fst-proj)) (cand .fst-proj))
+          (eqv-t (compose (factorize cand) (this .snd-proj)) (cand .snd-proj))
+      factor-unique :
+        (cand : product-candidate-t fst snd) ->
         (f : morphism-t (cand .object) (this .object)) ->
-        product-factor-commute fst snd this cand f ->
+        eqv-t (compose f (this .fst-proj)) (cand .fst-proj) ->
+        eqv-t (compose f (this .snd-proj)) (cand .snd-proj) ->
         (g : morphism-t (cand .object) (this .object)) ->
-        product-factor-commute fst snd this cand g ->
+        eqv-t (compose g (this .fst-proj)) (cand .fst-proj) ->
+        eqv-t (compose g (this .snd-proj)) (cand .snd-proj) ->
         eqv-t f g
   open product-t
+
+  module _ {fst snd : object-t} (p0 p1 : product-t fst snd) where
+    private
+      x = p0 .this .object
+      y = p1 .this .object
+      x-id = p0 .factorize (p0 .this)
+      y-id = p1 .factorize (p1 .this)
+      f = p1 .factorize (p0 .this)
+      g = p0 .factorize (p1 .this)
+
+    product-iso : iso-t x y
+    product-iso .morphism = f
+    product-iso .inverse = g
+    product-iso .inverse-left =
+      p0 .factor-unique
+        (p0 .this)
+        (compose f g) {!!} {!!}
+        -- (same (compose f (compose g (this p0 .fst-proj))))
+        -- (same (compose f (compose g (this p0 .fst-proj))))
+        (id x) {!!} {!!}
+    product-iso .inverse-right = {!!}
+
+
+  -- product-iso-unique
 
   -- TODO
   -- sum-t
