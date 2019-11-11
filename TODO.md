@@ -15,5 +15,3 @@
 - lattice-t
 # semantics
 - example semantics for simply typed lambda calculus
-# agda
-- create agda library file
