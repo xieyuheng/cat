@@ -129,7 +129,7 @@ record category-t (lv : level-t) : type (lsucc lv) where
   open product-candidate-t
 
   -- TODO
-  -- product-commute-t
+  -- maybe product-commute-t
 
   record product-t (fst snd : object-t) : type lv where
     field
@@ -163,7 +163,11 @@ record category-t (lv : level-t) : type (lsucc lv) where
     product-iso .morphism = f
     product-iso .inverse = g
     product-iso .inverse-left =
-      let
+      p0 .factor-unique
+        (p0 .this)
+        (compose f g) eqv-f-g-fst eqv-f-g-snd
+        (id x) (id-left (p0 .this .fst-proj)) (id-left (p0 .this .snd-proj))
+      where
         eqv-f-g-fst : eqv-t (compose (compose f g) (p0 .this .fst-proj)) (p0 .this .fst-proj)
         eqv-f-g-fst =
           eqv-begin
@@ -177,19 +181,15 @@ record category-t (lv : level-t) : type (lsucc lv) where
           eqv-end
         eqv-f-g-snd : eqv-t (compose (compose f g) (p0 .this .snd-proj)) (p0 .this .snd-proj)
         eqv-f-g-snd =
-          (eqv-compose
-            (eqv-swap (compose-associative f g (p0 .this .snd-proj)))
-            (eqv-replace
-              (the (eqv-t (p1 .this .snd-proj) (compose g (p0 .this .snd-proj)))
-                (eqv-swap (and-snd (p0 .factorize-commute (p1 .this)))))
-              (\ h -> eqv-t (compose f h) (p0 .this .snd-proj))
-              (the (eqv-t (compose f (p1 .this .snd-proj)) (p0 .this .snd-proj))
-                (and-snd (p1 .factorize-commute (p0 .this))))))
-      in
-      p0 .factor-unique
-        (p0 .this)
-        (compose f g) eqv-f-g-fst eqv-f-g-snd
-        (id x) (id-left (p0 .this .fst-proj)) (id-left (p0 .this .snd-proj))
+          eqv-begin
+            compose (compose f g) (p0 .this .snd-proj)
+          =[ eqv-swap (compose-associative f g (p0 .this .snd-proj)) ]
+            compose f (compose g (p0 .this .snd-proj))
+          =[ eqv-apply (compose f) (and-snd (p0 .factorize-commute (p1 .this))) ]
+            compose f (p1 .this .snd-proj)
+          =[ and-snd (p1 .factorize-commute (p0 .this)) ]
+            p0 .this .snd-proj
+          eqv-end
     product-iso .inverse-right = {!!}
 
   module _ {fst snd : object-t} (p0 p1 : product-t fst snd) where

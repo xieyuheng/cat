@@ -1,4 +1,3 @@
-- fix `eqv-f-g-snd`
 - use module system of agda
 - example semantics for simply typed lambda calculus
 - how to handle dual construction?
