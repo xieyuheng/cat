@@ -1,4 +1,4 @@
-{-# OPTIONS --prop #-}
+{-# OPTIONS --prop --allow-unsolved-metas #-}
 
 module category where
 
@@ -202,3 +202,7 @@ record category-t (lv : level-t) : type (lsucc lv) where
 
   -- TODO
   -- sum-t
+
+  -- pullback-t
+
+  -- pushout-t

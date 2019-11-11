@@ -5,13 +5,10 @@ module functor where
 open import pure
 open import simple
 open import category
-
 open category-t
 
-record functor-t (lv : level-t) : type (lsucc lv) where
+record functor-t {lv : level-t} (dom cod : category-t lv) : type (lsucc lv) where
   field
-    dom : category-t lv
-    cod : category-t lv
     map : dom .object-t  -> cod .object-t
     fmap : {a b : dom .object-t} ->
       dom .morphism-t a b ->
