@@ -5,7 +5,6 @@
 - how to handle dual construction?
 - abstract `unique`
 * structure
-- groupoid-t
 - group-category
 - abelian-group-t
 - ring-t

@@ -40,7 +40,7 @@ prop0 = prop lzero
 prop1 : type ltwo
 prop1 = prop lone
 
-data and-t {lv : level-t} (A B : prop lv) : type lv where
+data and-t {lv : level-t} (A B : prop lv) : prop lv where
   and : (a : A) -> (b : B) -> and-t A B
 
 and-fst : {lv : level-t} {A B : prop lv} ->
@@ -50,6 +50,9 @@ and-fst (and a b) = a
 and-snd : {lv : level-t} {A B : prop lv} ->
   and-t A B -> B
 and-snd (and a b) = b
+
+data prop-sigma-t {lv : level-t} (A : type lv) (D : A -> prop lv) : prop lv where
+  pair : (a : A) -> (b : D a) -> prop-sigma-t A D
 
 -- the
 

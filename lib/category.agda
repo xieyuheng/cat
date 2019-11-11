@@ -64,11 +64,11 @@ record category-t (lv : level-t)
           (id b)
   open iso-t
 
-  iso-t-eta : {x y : object-t} (i0 i1 : iso-t x y) ->
+  iso-eta : {x y : object-t} (i0 i1 : iso-t x y) ->
     the-eqv-t (morphism-t x y) (i0 .morphism) (i1 .morphism) ->
     the-eqv-t (morphism-t y x) (i0 .inverse) (i1 .inverse) ->
     the-eqv-t (iso-t x y) i0 i1
-  iso-t-eta (iso-intro f g p0 q0) (iso-intro f g p1 q1) refl refl = refl
+  iso-eta (iso-intro f g p0 q0) (iso-intro f g p1 q1) refl refl = refl
 
   record terminal-t : type lv where
     field
@@ -103,7 +103,7 @@ record category-t (lv : level-t)
         f-inv = i0 .inverse
         g-inv = i1 .inverse
       terminal-iso-unique : the-eqv-t (iso-t x y) i0 i1
-      terminal-iso-unique = iso-t-eta i0 i1 h1 h2 where
+      terminal-iso-unique = iso-eta i0 i1 h1 h2 where
         h1 : the-eqv-t (morphism-t x y) f g
         h1 = t1 .morphism-unique f g
         h2 : the-eqv-t (morphism-t y x) f-inv g-inv
