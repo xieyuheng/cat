@@ -1,15 +1,17 @@
 * category
+- limit
 - abstract `universal construction`
   - how is diagram in category is represented by functor?
 - how to handle dual construction?
 - abstract `unique`
 * structure
+- groupoid-t
 - group-category
-- abelian-group
-- ring
-- semiring
+- abelian-group-t
+- ring-t
+- semiring-t
 - orders
-- lattice
+- lattice-t
 * semantics
 - example semantics for simply typed lambda calculus
 * agda

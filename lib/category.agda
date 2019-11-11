@@ -207,3 +207,6 @@ record category-t (lv : level-t)
   -- pullback-t
 
   -- pushout-t
+
+empty-category : {lv : level-t} -> category-t lv
+empty-category = {!!}
