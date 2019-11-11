@@ -45,6 +45,8 @@ record category-t (lv : level-t) : type (lsucc lv) where
 
 ## Community
 
+Contributions are welcome, see [current TODO list](TODO.md) for tasks.
+
 - We enforce C4 as collaboration protocol.
   - [The C4 RFC](https://rfc.zeromq.org/spec:42/C4)
 - [Style Guide](STYLE-GUIDE.md)

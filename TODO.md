@@ -1,4 +1,4 @@
-* category
+# category
 - limit
   cone
   universal
@@ -6,14 +6,14 @@
   - how is diagram in category is represented by functor?
 - how to handle dual construction?
 - abstract `unique`
-* structure
+# structure
 - group-category
 - abelian-group-t
 - ring-t
 - semiring-t
 - orders
 - lattice-t
-* semantics
+# semantics
 - example semantics for simply typed lambda calculus
-* agda
+# agda
 - create agda library file
