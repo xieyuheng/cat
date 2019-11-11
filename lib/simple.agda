@@ -10,7 +10,7 @@ open eqv-reasoning
 open import basic
 
 data env-t : type0 where
-  env-null : env-t
+  env-empty : env-t
   env-ext : string-t -> env-t -> env-t
 
 data exp-t : type0 where
