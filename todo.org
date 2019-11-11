@@ -1,7 +1,14 @@
-- use module system of agda
-- example semantics for simply typed lambda calculus
-- how to handle dual construction?
-- create agda library file
-- abstract `unique`
+* category
 - abstract `universal construction`
   - how is diagram in category is represented by functor?
+- how to handle dual construction?
+- abstract `unique`
+* structure
+- group-category
+- orders
+- lattice
+* semantics
+- example semantics for simply typed lambda calculus
+* agda
+- use module system of agda
+- create agda library file
