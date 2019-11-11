@@ -1,6 +1,6 @@
 {-# OPTIONS --prop #-}
 
-module simple where
+module basic where
 
 open import pure
 

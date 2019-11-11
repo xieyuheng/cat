@@ -3,7 +3,7 @@
 module transformation where
 
 open import pure
-open import simple
+open import basic
 open import category
 open category-t
 open import functor

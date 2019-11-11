@@ -5,7 +5,7 @@ module semigroup where
 open import pure
 open eqv-reasoning
 
-open import simple
+open import basic
 
 record semigroup-t (lv : level-t)
   : type (lsucc lv) where

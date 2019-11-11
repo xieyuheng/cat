@@ -8,7 +8,7 @@ open eqv-reasoning
 open import category
 open category-t
 
-open import simple
+open import basic
 
 record group-t (lv : level-t)
   : type (lsucc lv) where

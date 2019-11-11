@@ -5,6 +5,9 @@
 - abstract `unique`
 * structure
 - group-category
+- abelian-group
+- ring
+- semiring
 - orders
 - lattice
 * semantics

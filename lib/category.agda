@@ -5,7 +5,7 @@ module category where
 open import pure
 open eqv-reasoning
 
-open import simple
+open import basic
 
 -- NOTE
 -- - Should `morphism-t` be at one level higher than `object-t`?
