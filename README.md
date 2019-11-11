@@ -2,8 +2,8 @@
 
 A categorical semantics library in Agda.
 
-The aim of this library is to give semantics to type theories, <br>
-for examples,
+The aim of this library is to give semantics to type theories. <br>
+For examples,
 - inductive types can be modeled by initial algebras,
 - the validity of a group of introduction rules and elimination rule can be ensured by adjoint functors.
 
