@@ -4,6 +4,11 @@ module simple where
 
 open import pure
 
+-- unit
+
+data unit-t {lv : level-t} : type lv where
+  unit : unit-t
+
 -- bool
 
 data bool-t : type0 where
