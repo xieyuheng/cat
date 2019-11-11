@@ -2,7 +2,6 @@
 
 module category.transformation where
 
-open import pure
 open import basic
 
 open import category

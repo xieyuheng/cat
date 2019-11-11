@@ -2,13 +2,11 @@
 
 module group where
 
-open import pure
+open import basic
 open eqv-reasoning
 
 open import category
 open category-t
-
-open import basic
 
 record group-t (lv : level-t)
   : type (lsucc lv) where

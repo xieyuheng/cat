@@ -2,7 +2,6 @@
 
 module groupoid where
 
-open import pure
 open import basic
 open import category
 open category-t

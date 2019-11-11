@@ -1,6 +1,5 @@
 * category
 - limit
-  diagram-t cat
   cone
   universal
 - abstract `universal construction`

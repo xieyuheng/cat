@@ -1,9 +1,12 @@
-# Pure
+# Cat
 
 An agda library for categorical semantics.
-- Pure ASCII
-- Pure prefix notation
-- Pure lisp naming convention
+
+A consistent and scale-able coding style is important to keep the library readable.
+The preferred coding style include,
+- prefer to use ASCII instead of unicode,
+- prefer to use prefix notation instead of infix notation, except for syntax sugar,
+- prefer to use `lisp-naming-convention` (see the following code example) instead of `camelCase`.
 
 ## Example
 

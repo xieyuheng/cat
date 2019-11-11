@@ -2,10 +2,8 @@
 
 module semigroup where
 
-open import pure
-open eqv-reasoning
-
 open import basic
+open eqv-reasoning
 
 record semigroup-t (lv : level-t)
   : type (lsucc lv) where

@@ -4,10 +4,8 @@ module language.simple where
 
 -- Simple typed lambda calculus in de Bruijn style.
 
-open import pure
-open eqv-reasoning
-
 open import basic
+open eqv-reasoning
 
 data env-t : type0 where
   env-empty : env-t

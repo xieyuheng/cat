@@ -2,7 +2,6 @@
 
 module category.shape.dot where
 
-open import pure
 open import basic
 
 open import category

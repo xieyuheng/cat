@@ -2,7 +2,6 @@
 
 module category.functor where
 
-open import pure
 open import basic
 
 open import category

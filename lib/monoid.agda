@@ -2,13 +2,11 @@
 
 module monoid where
 
-open import pure
+open import basic
 open eqv-reasoning
 
 open import category
 open category-t
-
-open import basic
 
 record monoid-t (lv : level-t)
   : type (lsucc lv) where

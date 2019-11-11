@@ -2,7 +2,6 @@
 
 module category.limit where
 
-open import pure
 open import basic
 
 open import category
