@@ -1,5 +1,8 @@
 * category
 - limit
+  diagram-t cat
+  cone
+  universal
 - abstract `universal construction`
   - how is diagram in category is represented by functor?
 - how to handle dual construction?
@@ -14,5 +17,4 @@
 * semantics
 - example semantics for simply typed lambda calculus
 * agda
-- use module system of agda
 - create agda library file

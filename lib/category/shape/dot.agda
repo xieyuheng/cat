@@ -1,12 +1,10 @@
 {-# OPTIONS --prop #-}
 
-module limit where
+module category.shape.dot where
 
 open import pure
 open import basic
+
 open import category
 open category-t
-open import functor
-open functor-t
-
--- TODO
+open iso-t

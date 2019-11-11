@@ -1,12 +1,14 @@
 {-# OPTIONS --prop #-}
 
-module transformation where
+module category.transformation where
 
 open import pure
 open import basic
+
 open import category
 open category-t
-open import functor
+
+open import category.functor
 open functor-t
 
 record transformation-t

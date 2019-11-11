@@ -1,9 +1,10 @@
 {-# OPTIONS --prop #-}
 
-module functor where
+module category.functor where
 
 open import pure
 open import basic
+
 open import category
 open category-t
 

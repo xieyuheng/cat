@@ -1,6 +1,6 @@
 {-# OPTIONS --prop --allow-unsolved-metas #-}
 
-module simple where
+module language.simple where
 
 -- Simple typed lambda calculus in de Bruijn style.
 
