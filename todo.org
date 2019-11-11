@@ -4,3 +4,4 @@
 - create agda library file
 - abstract `unique`
 - abstract `universal construction`
+  - how is diagram in category is represented by functor?
