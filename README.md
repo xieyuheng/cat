@@ -1,6 +1,6 @@
 # Cat
 
-A categorical semantics library in Agda. **[Work in progress.]**
+A categorical semantics library in Agda. **[Work in progress, but you can star it first.]**
 
 The aim of this library is to provide semantics to type theories. <br>
 For examples,
