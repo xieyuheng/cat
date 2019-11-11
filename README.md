@@ -1,9 +1,15 @@
 # Cat
 
-An agda library for categorical semantics.
+A categorical semantics library in Agda.
 
-A consistent and scale-able coding style is important to keep the library readable.
-The preferred coding style include,
+The aim of this library is to give semantics to inference rules of type theories, <br>
+for examples,
+- inductive types can be modeled by initial algebras,
+- the validity of a group of introduction rules and elimination rule can be ensured by adjoint functors.
+
+A consistent and scale-able coding style is important for keeping a software library maintainable. <br>
+This is specially true for languages with strong syntax extension supports (like Agda). <br>
+The preferred coding style of this library includes,
 - prefer to use ASCII instead of unicode,
 - prefer to use prefix notation instead of infix notation, except for syntax sugar,
 - prefer to use `lisp-naming-convention` (see the following code example) instead of `camelCase`.
