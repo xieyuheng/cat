@@ -144,3 +144,10 @@ module eqv-reasoning {lv : level-t} {A : type lv} where
 
   _eqv-end : (x : A) -> eqv-t x x
   x eqv-end = refl
+
+-- string
+
+open import Agda.Builtin.String
+
+string-t : type0
+string-t = String
