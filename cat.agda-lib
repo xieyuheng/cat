@@ -1,3 +1,3 @@
 name: cat
-include: lib
+include: src
 depend:
