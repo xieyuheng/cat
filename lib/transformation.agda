@@ -9,12 +9,12 @@ open category-t
 open import functor
 open functor-t
 
-record transformation-t (lv : level-t) : type (lsucc lv) where
+record transformation-t
+  {lv : level-t}
+  {dom cod : category-t lv}
+  (src tar : functor-t dom cod)
+  : type (lsucc lv) where
   field
-    dom : category-t lv
-    cod : category-t lv
-    src : functor-t dom cod
-    tar : functor-t dom cod
     component :
       (a : dom .object-t) ->
       cod .morphism-t (src .map a) (tar .map a)

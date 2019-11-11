@@ -17,7 +17,8 @@ open import simple
 --   where objects form a set.
 -- We delay these decisions until we running into troubles.
 
-record category-t (lv : level-t) : type (lsucc lv) where
+record category-t (lv : level-t)
+  : type (lsucc lv) where
   field
     object-t : type lv
     morphism-t : object-t -> object-t -> type lv
