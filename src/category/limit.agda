@@ -12,7 +12,7 @@ open functor-t
 
 record cone-t
   {lv : level-t}
-  {shape cat : category-t lv}
+  (shape cat : category-t lv)
   (diagram : functor-t shape cat)
   (apex : cat .object-t)
   : type (lsucc lv) where
@@ -29,21 +29,21 @@ record limit-t
   field
     diagram : functor-t shape cat
     apex : cat .object-t
-    cone : cone-t diagram apex
+    cone : cone-t shape cat diagram apex
     mediate :
       (other-apex : cat .object-t) ->
-      (other-cone : cone-t diagram other-apex) ->
+      (other-cone : cone-t shape cat diagram other-apex) ->
       cat .morphism-t other-apex apex
     mediating-morphism-commute :
       (other-apex : cat .object-t)
-      (other-cone : cone-t diagram other-apex)
+      (other-cone : cone-t shape cat diagram other-apex)
       (index : shape .object-t) ->
       the-eqv-t (cat .morphism-t other-apex (diagram .map index))
         (other-cone .line index)
         (cat .compose (mediate other-apex other-cone) (cone .line index))
     mediating-morphism-unique :
       (other-apex : cat .object-t)
-      (other-cone : cone-t diagram other-apex)
+      (other-cone : cone-t shape cat diagram other-apex)
       (other-mediating-morphism : (cat .morphism-t other-apex apex)) ->
       (index : shape .object-t) ->
       the-eqv-t (cat .morphism-t other-apex (diagram .map index))

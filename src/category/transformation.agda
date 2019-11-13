@@ -12,7 +12,7 @@ open functor-t
 
 record transformation-t
   {lv : level-t}
-  {dom cod : category-t lv}
+  (dom cod : category-t lv)
   (src tar : functor-t dom cod)
   : type (lsucc lv) where
   field
