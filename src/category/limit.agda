@@ -10,6 +10,10 @@ open category-t
 open import category.functor
 open functor-t
 
+-- NOTE
+-- useing fulfilling type system
+-- one can avoid choosing between argument and field
+
 record cone-t
   {lv : level-t}
   (shape cat : category-t lv)

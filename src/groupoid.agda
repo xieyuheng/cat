@@ -29,3 +29,17 @@ record groupoid-t
     inv-iso-eqv-inverse : {a b : cat .object-t} ->
       (f : cat .morphism-t a b) ->
       eqv-t ((inv-iso f) .inverse) (inv f)
+
+-- NOTE
+-- the `iso-t cat a b f (inv f)` below
+-- is where fulfilling type system is useful
+
+-- record groupoid-t
+--   {lv : level-t}
+--   (cat : category-t lv)
+--   : type (lsucc lv) where
+--   field
+--     inv : {a b : cat .object-t} ->
+--       cat .morphism-t a b -> cat .morphism-t b a
+--     inv-iso : {a b : cat .object-t} ->
+--       (f : cat .morphism-t a b) -> iso-t cat a b f (inv f)

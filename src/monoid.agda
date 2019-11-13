@@ -33,3 +33,6 @@ module _ {lv : level-t} (monoid : monoid-t lv) where
   monoid-as-category .id-right {unit} {unit} = monoid .id-right
   monoid-as-category .compose-associative {unit} {unit} {unit} {unit} x y z =
     monoid .mul-associative x y z
+
+  k : {lv : level-t} (cat : category-t lv) -> cat .object-t
+  k = {!!}
