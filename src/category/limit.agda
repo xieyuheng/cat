@@ -20,13 +20,33 @@ record cone-t
     line :
       (index : shape .object-t) ->
       cat .morphism-t apex (diagram .map index)
+open cone-t
 
 record limit-t
   {lv : level-t}
   (shape cat : category-t lv)
   : type (lsucc lv) where
   field
-    object : cat .object-t
     diagram : functor-t shape cat
-    cone : cone-t diagram object
-    -- universal :
+    apex : cat .object-t
+    cone : cone-t diagram apex
+    mediate :
+      (other-apex : cat .object-t) ->
+      (other-cone : cone-t diagram other-apex) ->
+      cat .morphism-t other-apex apex
+    mediating-morphism-commute :
+      (other-apex : cat .object-t)
+      (other-cone : cone-t diagram other-apex)
+      (index : shape .object-t) ->
+      the-eqv-t (cat .morphism-t other-apex (diagram .map index))
+        (other-cone .line index)
+        (cat .compose (mediate other-apex other-cone) (cone .line index))
+    mediating-morphism-unique :
+      (other-apex : cat .object-t)
+      (other-cone : cone-t diagram other-apex)
+      (other-mediating-morphism : (cat .morphism-t other-apex apex)) ->
+      (index : shape .object-t) ->
+      the-eqv-t (cat .morphism-t other-apex (diagram .map index))
+        (other-cone .line index)
+        (cat .compose other-mediating-morphism (cone .line index)) ->
+      eqv-t other-mediating-morphism (mediate other-apex other-cone)

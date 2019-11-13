@@ -1,7 +1,5 @@
 # category
-- `cone-t` and `limit-t`
-- abstract `universal construction`
-  - how is diagram in category is represented by functor?
+- `cone-t` and `limit-t` -- by natural transformation
 - how to handle dual construction?
 - abstract `unique`
 # structure
