@@ -107,6 +107,18 @@ record category-t (lv : level-t)
         h2 : the-eqv-t (morphism-t y x) f-inv g-inv
         h2 = t0 .morphism-unique f-inv g-inv
 
+  -- NOTE
+  -- If we have fulfilling type system,
+  --   the above used of `module _` can be avoid.
+  -- terminal-iso-unique :
+  --   {x y : object-t}
+  --   (t0 : terminal-t x) ->
+  --   (t1 : terminal-t y) ->
+  --   (i0 i1 : iso-t x y) ->
+  --   the-eqv-t (iso-t x y) i0 i1
+
+
+
   -- TODO
   -- initial-t
 
