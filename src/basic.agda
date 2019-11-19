@@ -52,7 +52,7 @@ and-snd : {lv : level-t} {A B : prop lv} ->
 and-snd (and a b) = b
 
 data prop-sigma-t {lv : level-t} (A : type lv) (D : A -> prop lv) : prop lv where
-  pair : (a : A) -> D a -> prop-sigma-t A D
+  sigma : (a : A) -> D a -> prop-sigma-t A D
 
 -- the
 
@@ -102,7 +102,15 @@ eqv-replace refl motive base = base
 -- sigma
 
 data sigma-t {lv : level-t} (A : type lv) (D : A -> type lv) : type lv where
-  pair : (a : A) -> D a -> sigma-t A D
+  sigma : (a : A) -> D a -> sigma-t A D
+
+sigma-fst : {lv : level-t} {A : type lv} {D : A -> type lv} ->
+  sigma-t A D -> A
+sigma-fst (sigma a b) = a
+
+sigma-snd : {lv : level-t} {A : type lv} {D : A -> type lv} ->
+  (si : sigma-t A D) -> D (sigma-fst si)
+sigma-snd (sigma a b) = b
 
 -- pi
 
