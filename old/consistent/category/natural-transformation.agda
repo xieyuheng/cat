@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module category.natural-transformation where
 
@@ -13,8 +11,10 @@ open import category.functor
 open functor-t
 
 record natural-transformation-t
-  (dom cod : category-t)
-  (src tar : functor-t dom cod) : type where
+  {lv : level-t}
+  (dom cod : category-t lv)
+  (src tar : functor-t dom cod)
+  : type (lsucc lv) where
   field
     component :
       (a : dom .object-t) ->

@@ -1,102 +1,125 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
 
 module basic where
 
 open import Agda.Primitive public
 
+-- level
+
+level-t : Set
+level-t = Level
+
+lsucc : level-t -> level-t
+lsucc = lsuc
+
+lone : level-t
+lone = lsucc lzero
+
+ltwo : level-t
+ltwo = lsucc lone
+
 -- type
 
-type : Set
-type = Set
+type : (lv : level-t) -> Set (lsucc lv)
+type lv = Set lv
 
-t : type
-t = type
+type0 : type lone
+type0 = type lzero
+
+type1 : type ltwo
+type1 = type lone
 
 -- prop
 
-prop : type
-prop = Prop
+prop : (lv : level-t) -> Set (lsucc lv)
+prop lv = Prop lv
 
-data and-t (A B : prop) : prop where
+prop0 : type lone
+prop0 = prop lzero
+
+prop1 : type ltwo
+prop1 = prop lone
+
+data and-t {lv : level-t} (A B : prop lv) : prop lv where
   and : (a : A) -> (b : B) -> and-t A B
 
-and-fst : {A B : prop} ->
+and-fst : {lv : level-t} {A B : prop lv} ->
   and-t A B -> A
 and-fst (and a b) = a
 
-and-snd : {A B : prop} ->
+and-snd : {lv : level-t} {A B : prop lv} ->
   and-t A B -> B
 and-snd (and a b) = b
 
-data prop-sigma-t (A : type) (D : A -> prop) : prop where
+data prop-sigma-t {lv : level-t} (A : type lv) (D : A -> prop lv) : prop lv where
   sigma : (a : A) -> D a -> prop-sigma-t A D
 
 -- the
 
-the : (A : prop) -> (p : A) -> A
+the : {lv : level-t} (A : prop lv) -> (p : A) -> A
 the A p = p
 
 -- eqv
 
-data eqv-t {A : type} (p : A) : A -> prop where
+data eqv-t {lv : level-t} {A : type lv} (p : A) : A -> prop lv where
   refl : eqv-t p p
 
 {-# BUILTIN EQUALITY eqv-t #-}
 
-the-eqv-t : (A : type) (p : A) -> A -> prop
+the-eqv-t : {lv : level-t} (A : type lv) (p : A) -> A -> prop lv
 the-eqv-t A = eqv-t
 
-the-same : (A : type) (p : A) -> eqv-t p p
+the-same : {lv : level-t} (A : type lv) (p : A) -> eqv-t p p
 the-same A p = refl
 
-same : {A : type} (p : A) -> eqv-t p p
+same : {lv : level-t} {A : type lv} (p : A) -> eqv-t p p
 same p = refl
 
 eqv-apply :
-  {A B : type} {x y : A} ->
+  {lv : level-t} {A B : type lv} {x y : A} ->
   (f : A -> B) -> eqv-t x y -> eqv-t (f x) (f y)
 eqv-apply f refl = refl
 
 eqv-compose :
-  {A : type} {x y z : A} ->
+  {lv : level-t} {A : type lv} {x y z : A} ->
   eqv-t x y -> eqv-t y z -> eqv-t x z
 eqv-compose refl refl = refl
 
 eqv-swap :
-  {A : type} {x y : A} ->
+  {lv : level-t} {A : type lv} {x y : A} ->
   eqv-t x y -> eqv-t y x
 eqv-swap refl = refl
 
 eqv-replace :
-  {A : type} {x y : A} ->
+  {lv : level-t} {A : type lv} {x y : A} ->
   (equation : eqv-t x y) ->
-  (motive : A -> prop) ->
+  {lv2 : level-t} ->
+  (motive : A -> prop lv2) ->
   motive x ->
   motive y
 eqv-replace refl motive base = base
 
 -- sigma
 
-data sigma-t (A : type) (D : A -> type) : type where
+data sigma-t {lv : level-t} (A : type lv) (D : A -> type lv) : type lv where
   sigma : (a : A) -> D a -> sigma-t A D
 
-sigma-fst : {A : type} {D : A -> type} ->
+sigma-fst : {lv : level-t} {A : type lv} {D : A -> type lv} ->
   sigma-t A D -> A
 sigma-fst (sigma a b) = a
 
-sigma-snd : {A : type} {D : A -> type} ->
+sigma-snd : {lv : level-t} {A : type lv} {D : A -> type lv} ->
   (si : sigma-t A D) -> D (sigma-fst si)
 sigma-snd (sigma a b) = b
 
 -- pi
 
-data pi-t (A : type) (D : A -> type) : type where
+data pi-t {lv : level-t} (A : type lv) (D : A -> type lv) : type lv where
   pi : ((a : A) -> D a) -> pi-t A D
 
 -- eqv-reasoning
 
-module eqv-reasoning {A : type} where
+module eqv-reasoning {lv : level-t} {A : type lv} where
 
   infix  1 eqv-begin_
   infixr 2 _=[]_
@@ -139,17 +162,17 @@ module eqv-reasoning {A : type} where
 
 open import Agda.Builtin.String
 
-string-t : type
+string-t : type0
 string-t = String
 
 -- unit
 
-data unit-t : type where
+data unit-t {lv : level-t} : type lv where
   unit : unit-t
 
 -- bool
 
-data bool-t : type where
+data bool-t : type0 where
   true : bool-t
   false : bool-t
 
@@ -165,13 +188,13 @@ bool-and : bool-t -> bool-t -> bool-t
 bool-and true x = x
 bool-and false _  = false
 
-bool-if : {A : type} -> bool-t -> A -> A -> A
-bool-if true x y = x
-bool-if false x y = y
+if : {n : _} {A : Set n} -> bool-t -> A -> A -> A
+if true x y = x
+if false x y = y
 
 -- nat
 
-data nat-t : type where
+data nat-t : type0 where
   zero : nat-t
   succ : nat-t -> nat-t
 
@@ -183,47 +206,86 @@ nat-mul : nat-t -> nat-t -> nat-t
 nat-mul zero y = zero
 nat-mul (succ x) y = nat-add y (nat-mul x y)
 
+data bot : type0 where
+
+bot-elim : bot ->
+  {lv2 : level-t} -> {whatever : type lv2} -> whatever
+bot-elim ()
+
+negate : {lv : level-t} -> prop lv -> type lv
+negate a = a -> bot
+
+data dec {lv : level-t} (A : prop lv) : type lv where
+  yes : A -> dec A
+  no  : negate A -> dec A
+
+nat-eq-inj : (a b : nat-t) -> eqv-t (succ a) (succ b) -> eqv-t a b
+nat-eq-inj a b refl = refl
+
+nat-eq-p : (a b : nat-t) -> dec (eqv-t a b)
+nat-eq-p zero zero = yes refl
+nat-eq-p zero (succ _) = no \ ()
+nat-eq-p (succ _) zero = no \ ()
+nat-eq-p (succ x) (succ y) with nat-eq-p x y
+... | yes p = yes (eqv-apply succ p)
+... | no  p = no \ q -> p (nat-eq-inj x y q)
+
+data nat-lt : (a b : nat-t) -> prop0 where
+  zero-lt-n    : {n : nat-t} -> nat-lt zero n
+  succ-lt-succ : {m n : nat-t} -> (p : nat-lt m n) -> nat-lt (succ m) (succ n)
+
+nat-lt-inj : (a b : nat-t) -> nat-lt (succ a) (succ b) -> nat-lt a b
+nat-lt-inj a b (succ-lt-succ p) = p
+
+nat-lt-p : (a b : nat-t) -> dec (nat-lt a b)
+nat-lt-p zero zero = yes zero-lt-n
+nat-lt-p zero (succ _) = yes zero-lt-n
+nat-lt-p (succ _) zero = no \ ()
+nat-lt-p (succ x) (succ y) with nat-lt-p x y
+... | yes p = yes (succ-lt-succ p)
+... | no  p = no \ q -> p (nat-lt-inj x y q)
+
 nat-add-associate :
   (x y z : nat-t) ->
-  eqv-t
+  (eqv-t
     (nat-add x (nat-add y z))
-    (nat-add (nat-add x y) z)
+    (nat-add (nat-add x y) z))
 nat-add-associate zero y z = refl
 nat-add-associate (succ x) y z =
   eqv-apply succ (nat-add-associate x y z)
 
 nat-add-zero-commute :
   (x : nat-t) ->
-  eqv-t
+  (eqv-t
     (nat-add zero x)
-    (nat-add x zero)
+    (nat-add x zero))
 nat-add-zero-commute zero = refl
 nat-add-zero-commute (succ x) =
   eqv-apply succ (nat-add-zero-commute x)
 
 nat-add-succ-commute-1 :
   (x y : nat-t) ->
-  eqv-t
+  (eqv-t
     (nat-add (succ x) y)
-    (succ (nat-add x y))
+    (succ (nat-add x y)))
 nat-add-succ-commute-1 zero y = refl
 nat-add-succ-commute-1 (succ x) y =
   eqv-apply succ (nat-add-succ-commute-1 x y)
 
 nat-add-succ-commute-2 :
   (x y : nat-t) ->
-  eqv-t
+  (eqv-t
     (nat-add x (succ y))
-    (succ (nat-add x y))
+    (succ (nat-add x y)))
 nat-add-succ-commute-2 zero y = refl
 nat-add-succ-commute-2 (succ x) y =
   eqv-apply succ (nat-add-succ-commute-2 x y)
 
 nat-add-commute :
   (x y : nat-t) ->
-  eqv-t
+  (eqv-t
     (nat-add x y)
-    (nat-add y x)
+    (nat-add y x))
 nat-add-commute zero y =
   nat-add-zero-commute y
 nat-add-commute (succ x) y =
@@ -233,13 +295,13 @@ nat-add-commute (succ x) y =
 
 -- list
 
-data list-t (A : type) : type where
+data list-t {lv : level-t} (A : type lv) : type lv where
   null-list : list-t A
   cons-list :  A -> (list-t A) -> (list-t A)
 
 -- vec
 
-data vec-t (A : type) : nat-t -> type where
+data vec-t {lv : level-t} (A : type lv) : nat-t -> type lv where
   null-vec : vec-t A zero
   cons-vec : {n : nat-t} ->
     A -> (vec-t A n) -> (vec-t A (succ n))

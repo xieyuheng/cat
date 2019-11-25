@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module category.functor where
 
@@ -9,7 +7,10 @@ open import basic
 open import category
 open category-t
 
-record functor-t (dom cod : category-t) : type where
+record functor-t
+  {lv : level-t}
+  (dom cod : category-t lv)
+  : type (lsucc lv) where
   field
     map : dom .object-t  -> cod .object-t
     fmap : {a b : dom .object-t} ->

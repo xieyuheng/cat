@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module groupoid where
 
@@ -16,7 +14,10 @@ open iso-t
 --   `(inv-iso f) .morphism` should be `inv-iso(f).morphism`.
 --   `((f x) .m1 x1) .m2 x2` should be `f(x).m1(x1).m2(x2)`
 
-record groupoid-t (cat : category-t) : type where
+record groupoid-t
+  {lv : level-t}
+  (cat : category-t lv)
+  : type (lsucc lv) where
   field
     inv : {a b : cat .object-t} ->
       cat .morphism-t a b -> cat .morphism-t b a
@@ -34,7 +35,9 @@ record groupoid-t (cat : category-t) : type where
 -- is where fulfilling type system is useful
 
 -- record groupoid-t
---   (cat : category-t) : type where
+--   {lv : level-t}
+--   (cat : category-t lv)
+--   : type (lsucc lv) where
 --   field
 --     inv : {a b : cat .object-t} ->
 --       cat .morphism-t a b -> cat .morphism-t b a

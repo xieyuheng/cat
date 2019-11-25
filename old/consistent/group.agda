@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
-{-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
+{-# OPTIONS --prop --allow-unsolved-metas #-}
 
 module group where
 
@@ -10,9 +8,10 @@ open eqv-reasoning
 open import category
 open category-t
 
-record group-t : type where
+record group-t (lv : level-t)
+  : type (lsucc lv) where
   field
-    elem-t : type
+    elem-t : type lv
     mul : elem-t -> elem-t -> elem-t
     mul-associative :
       (x y z : elem-t) ->
@@ -31,5 +30,5 @@ record group-t : type where
   div : elem-t -> elem-t -> elem-t
   div x y = mul x (inv y)
 
-group-category : category-t
+group-category : {lv : level-t} -> category-t lv
 group-category = {!!}

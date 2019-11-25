@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
-{-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
+{-# OPTIONS --prop --allow-unsolved-metas #-}
 
 module category where
 
@@ -8,16 +6,20 @@ open import basic
 open eqv-reasoning
 
 -- NOTE
+-- - Should `morphism-t` be at one level higher than `object-t`?
 -- - Should we not use the general `the-eqv-t` but use `the-morphism-eqv-t`?
 --   We will need equivalence relation to do this.
 -- - How should we handle `homset`?
 --   We will need `set-t` to do this.
+-- - By `object-t : type lv` our model of category theory is limited to small categories,
+--   where objects form a set.
 -- We delay these decisions until we running into troubles.
 
-record category-t : type where
+record category-t (lv : level-t)
+  : type (lsucc lv) where
   field
-    object-t : type
-    morphism-t : object-t -> object-t -> type
+    object-t : type lv
+    morphism-t : object-t -> object-t -> type lv
     id : (a : object-t) -> morphism-t a a
     compose : {a b c : object-t} ->
       morphism-t a b ->
@@ -45,7 +47,7 @@ record category-t : type where
   morphism-cod : {a b : object-t} -> morphism-t a b -> object-t
   morphism-cod {a} {b} f = b
 
-  record iso-t (a b : object-t) : type where
+  record iso-t (a b : object-t) : type lv where
     constructor iso-intro
     field
       morphism : morphism-t a b
@@ -66,7 +68,7 @@ record category-t : type where
     the-eqv-t (iso-t x y) i0 i1
   iso-eta (iso-intro f g p0 q0) (iso-intro f g p1 q1) refl refl = refl
 
-  record terminal-t : type where
+  record terminal-t : type lv where
     field
       object : object-t
       morphism : (x : object-t) -> morphism-t x object
@@ -120,7 +122,7 @@ record category-t : type where
   -- TODO
   -- initial-t
 
-  opposite : category-t
+  opposite : category-t lv
   opposite .object-t = object-t
   opposite .morphism-t a b = morphism-t b a
   opposite .id = id
@@ -130,7 +132,7 @@ record category-t : type where
   opposite .compose-associative f g h =
     eqv-swap (compose-associative h g f)
 
-  record product-candidate-t (fst snd : object-t) : type where
+  record product-candidate-t (fst snd : object-t) : type lv where
     field
       object : object-t
       fst-proj : morphism-t object fst
@@ -140,7 +142,7 @@ record category-t : type where
   -- TODO
   -- maybe product-commute-t
 
-  record product-t (fst snd : object-t) : type where
+  record product-t (fst snd : object-t) : type lv where
     field
       this : product-candidate-t fst snd
       factorize :
@@ -216,5 +218,5 @@ record category-t : type where
 
   -- pushout-t
 
-empty-category : category-t
+empty-category : {lv : level-t} -> category-t lv
 empty-category = {!!}

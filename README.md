@@ -7,6 +7,18 @@ For examples,
 - inductive types can be modeled by initial algebras,
 - the validity of a group of introduction rules and elimination rule can be ensured by adjoint functors.
 
+## Using inconsistent system
+
+An inconsistent system is still very valuable for creative reasoning, <br>
+and we can always use a consistent system later in the development.
+
+This argument is like the argument against premature optimization in programming.
+
+- More about using inconsistent system, <br>
+  see [Vladimir Voevodsky's Lecture about Univalent Foundations at the Institut Henri Poincaré](https://inner.xieyuheng.now.sh/person/vladimir-voevodsky/lecture-about-univalent-foundations-at-the-institut-henri-poincar%C3%A9).
+
+## Coding style
+
 A consistent and scale-able coding style is important for keeping a software library maintainable. <br>
 This is specially true for languages with strong syntax extension supports (like Agda). <br>
 The preferred coding style of this library includes,
@@ -17,10 +29,10 @@ The preferred coding style of this library includes,
 ## Example
 
 ``` agda
-record category-t (lv : level-t) : type (lsucc lv) where
+record category-t : type where
   field
-    object-t : type lv
-    morphism-t : object-t -> object-t -> type lv
+    object-t : type
+    morphism-t : object-t -> object-t -> type
     id : (a : object-t) -> morphism-t a a
     compose : {a b c : object-t} ->
       morphism-t a b ->

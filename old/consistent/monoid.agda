@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
-{-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
+{-# OPTIONS --prop --allow-unsolved-metas #-}
 
 module monoid where
 
@@ -10,9 +8,10 @@ open eqv-reasoning
 open import category
 open category-t
 
-record monoid-t : type where
+record monoid-t (lv : level-t)
+  : type (lsucc lv) where
   field
-    elem-t : type
+    elem-t : type lv
     mul : elem-t -> elem-t -> elem-t
     mul-associative :
       (x y z : elem-t) ->
@@ -23,9 +22,9 @@ record monoid-t : type where
     id-left : (x : elem-t) -> the-eqv-t elem-t (mul id x) x
     id-right : (x : elem-t) -> the-eqv-t elem-t (mul x id) x
 
-module _ (monoid : monoid-t) where
+module _ {lv : level-t} (monoid : monoid-t lv) where
   open monoid-t
-  monoid-as-category : category-t
+  monoid-as-category : category-t lv
   monoid-as-category .object-t = unit-t
   monoid-as-category .morphism-t unit unit = monoid .elem-t
   monoid-as-category .id unit = monoid .id
@@ -35,5 +34,5 @@ module _ (monoid : monoid-t) where
   monoid-as-category .compose-associative {unit} {unit} {unit} {unit} x y z =
     monoid .mul-associative x y z
 
-  k : (cat : category-t) -> cat .object-t
+  k : {lv : level-t} (cat : category-t lv) -> cat .object-t
   k = {!!}

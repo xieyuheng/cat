@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module category.shape.dot where
 

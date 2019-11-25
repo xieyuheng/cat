@@ -1,6 +1,4 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module category.limit where
 
@@ -17,16 +15,21 @@ open functor-t
 -- one can avoid choosing between argument and field
 
 record cone-t
-  (shape cat : category-t)
+  {lv : level-t}
+  (shape cat : category-t lv)
   (diagram : functor-t shape cat)
-  (apex : cat .object-t) : type where
+  (apex : cat .object-t)
+  : type (lsucc lv) where
   field
     line :
       (index : shape .object-t) ->
       cat .morphism-t apex (diagram .map index)
 open cone-t
 
-record limit-t (shape cat : category-t) : type where
+record limit-t
+  {lv : level-t}
+  (shape cat : category-t lv)
+  : type (lsucc lv) where
   field
     diagram : functor-t shape cat
     apex : cat .object-t

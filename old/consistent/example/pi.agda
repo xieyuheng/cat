@@ -1,12 +1,10 @@
-{-# OPTIONS --type-in-type #-}
 {-# OPTIONS --prop #-}
-{-# OPTIONS --allow-unsolved-metas #-}
 
 module example.pi where
 
 open import basic
 
-bool-or-nat : bool-t -> type
+bool-or-nat : bool-t -> type0
 bool-or-nat true = bool-t
 bool-or-nat false = nat-t
 
