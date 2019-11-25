@@ -9,6 +9,8 @@ For examples,
 
 ## Using inconsistent system
 
+The inconsistent `type-in-type` system is used.
+
 An inconsistent system is still very valuable for creative reasoning, <br>
 and we can always use a consistent system later in the development.
 
