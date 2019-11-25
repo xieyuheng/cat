@@ -9,7 +9,8 @@ For examples,
 
 ## Using inconsistent system
 
-The inconsistent `type-in-type` system is used.
+The inconsistent `type-in-type` system is used. <br>
+At this early stage of development, we care more about easy to use than consistency.
 
 An inconsistent system is still very valuable for creative reasoning, <br>
 and we can always use a consistent system later in the development.

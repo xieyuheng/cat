@@ -1,6 +1,3 @@
-# type in type
-- use type in type
-  - we care more about easy to use than consistency
 # category
 - `cone-t` and `limit-t` -- by natural transformation
 - how to handle dual construction?
