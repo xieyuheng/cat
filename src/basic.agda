@@ -10,9 +10,6 @@ open import Agda.Primitive public
 type : Set
 type = Set
 
-t : type
-t = type
-
 -- prop
 
 prop : type
