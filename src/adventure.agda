@@ -8,31 +8,61 @@ open import basic
 open eqv-reasoning
 
 record adventure-t : type where
+  infixl 2 _*_
   field
     jojo-t : type
 
     cut : jojo-t -> jojo-t
-    mul : jojo-t -> jojo-t -> jojo-t
+    _*_ : jojo-t -> jojo-t -> jojo-t
 
-    cut-respect-mul : (f g : jojo-t) ->
-      eqv-t (cut (mul f g)) (mul (cut f) (cut g))
+    mul-cut : (f g : jojo-t) ->
+      eqv-t (cut (f * g)) ((cut f) * (cut g))
     mul-associative : (f g h : jojo-t) ->
-      eqv-t (mul f (mul g h)) (mul (mul f g) h)
+      eqv-t (f * (g * h)) ((f * g) * h)
 
     id : jojo-t
-
     id-left : (f : jojo-t) ->
-      eqv-t f (mul id f)
+      eqv-t (id * f) f
     id-right : (f : jojo-t) ->
-      eqv-t f (mul f id)
-
-    id-cut-idempotent : eqv-t (cut id) id
+      eqv-t (f * id) f
+    id-cut :
+      eqv-t (cut id) id
 
     error : jojo-t
-
     error-left : (f : jojo-t) ->
-      eqv-t error (mul error f)
+      eqv-t (error * f) error
     error-right : (f : jojo-t) ->
-      eqv-t error (mul f error)
+      eqv-t (f * error) error
+    error-cut :
+      eqv-t (cut error) error
 
-    error-cut-idempotent : eqv-t (cut error) error
+    quo : jojo-t -> jojo-t
+    exe : jojo-t
+    quo-exe : (x : jojo-t) ->
+      eqv-t ((quo x) * exe) x
+    quo-cut : (x : jojo-t) ->
+      eqv-t (cut (quo x)) (quo (cut x))
+
+    drop : jojo-t
+    drop-compute : (x : jojo-t) ->
+      eqv-t (x * drop) id
+
+    dup : jojo-t
+    dup-compute : (x : jojo-t) ->
+      eqv-t (x * dup) (x * x)
+
+    swap : jojo-t
+    swap-compute : (x y : jojo-t) ->
+      eqv-t (x * y * swap) (y * x)
+
+    pair fst snd : jojo-t
+    pair-fst : (x y : jojo-t) ->
+      eqv-t (x * y * pair * fst) x
+    pair-snd : (x y : jojo-t) ->
+      eqv-t (x * y * pair * snd) y
+
+    branch left right : jojo-t
+    branch-left : (x y : jojo-t) ->
+      eqv-t (left * x * y * branch) x
+    branch-right : (x y : jojo-t) ->
+      eqv-t (right * x * y * branch) y
