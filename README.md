@@ -26,7 +26,7 @@ A consistent and scale-able coding style is important for keeping a software lib
 This is specially true for languages with strong syntax extension supports (like Agda). <br>
 The preferred coding style of this library includes,
 - prefer to use ASCII instead of unicode,
-- prefer to use prefix notation instead of infix notation, except for syntax sugar,
+- prefer to use prefix notation instead of infix notation, except for syntax sugar and some associative binary functions,
 - prefer to use `lisp-naming-convention` (see the following code example) instead of `camelCase`.
 
 ## Example
