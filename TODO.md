@@ -1,3 +1,4 @@
+Kurt Gödel 
 # category
 - `cone-t` and `limit-t` -- by natural transformation
 - how to handle dual construction?
