@@ -44,16 +44,16 @@ record adventure-t : type where
       eqv-t (cut (quo x)) (quo (cut x))
 
     drop : jojo-t
-    drop-compute : (x : jojo-t) ->
-      eqv-t (x * drop) id
+    drop-quo : (x : jojo-t) ->
+      eqv-t ((quo x) * drop) id
 
     dup : jojo-t
-    dup-compute : (x : jojo-t) ->
-      eqv-t (x * dup) (x * x)
+    dup-quo : (x : jojo-t) ->
+      eqv-t ((quo x) * dup) ((quo x) * (quo x))
 
     swap : jojo-t
-    swap-compute : (x y : jojo-t) ->
-      eqv-t (x * y * swap) (y * x)
+    swap-quo : (x y : jojo-t) ->
+      eqv-t ((quo x) * (quo y) * swap) ((quo y) * (quo x))
 
     pair fst snd : jojo-t
     pair-fst : (x y : jojo-t) ->
