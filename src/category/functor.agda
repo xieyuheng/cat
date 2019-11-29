@@ -15,13 +15,13 @@ record functor-t (dom cod : category-t) : type where
     fmap : {a b : dom .object-t} ->
       dom .morphism-t a b ->
       cod .morphism-t (map a) (map b)
-    fmap-respect-compose : {a b c : dom .object-t} ->
+    fmap-compose : {a b c : dom .object-t} ->
       (f : dom .morphism-t a b) ->
       (g : dom .morphism-t b c) ->
       the-eqv-t (cod .morphism-t (map a) (map c))
         (fmap (dom .compose f g))
         (cod .compose (fmap f) (fmap g))
-    fmap-respect-id : {a : dom .object-t} ->
+    fmap-id : {a : dom .object-t} ->
       the-eqv-t (cod .morphism-t (map a) (map a))
         (fmap (dom .id a))
         (cod .id (map a))
