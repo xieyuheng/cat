@@ -112,3 +112,13 @@ record contextual-pre-category-t : type where
 
     -- TODO
     -- lift-morphism-compose
+
+    -- TODO
+    -- object-set-of-length : nat-t -> (set-t object-t)
+
+    -- TODO
+    -- object-set-of-father : (x : object-t) -> (set-t object-t)
+    -- where { y in the set, eqv-t (father y) x }
+
+    -- TODO
+    -- another function defined by object-set-of-length
